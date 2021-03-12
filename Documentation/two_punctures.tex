@@ -1,0 +1,791 @@
+%****** Start of file apssamp.tex ******
+%
+%   This file is part of the APS files in the REVTeX 4.1 distribution.
+%   Version 4.1r of REVTeX, August 2010
+%
+%   Copyright (c) 2009, 2010 The American Physical Society.
+%
+%   See the REVTeX 4 README file for restrictions and more information.
+%
+% TeX'ing this file requires that you have AMS-LaTeX 2.0 installed
+% as well as the rest of the prerequisites for REVTeX 4.1
+%
+% See the REVTeX 4 README file
+% It also requires running BibTeX. The commands are as follows:
+%
+%  1)  latex apssamp.tex
+%  2)  bibtex apssamp
+%  3)  latex apssamp.tex
+%  4)  latex apssamp.tex
+%
+\documentclass[%
+%reprint,
+%preprint,
+notitlepage,
+%superscriptaddress,
+%groupedaddress,
+%unsortedaddress,
+%runinaddress,
+%frontmatterverbose, 
+report,
+%showpacs,preprintnumbers,
+nofootinbib,
+%nobibnotes,
+%bibnotes,
+ amsmath,amssymb,
+ aps,
+%pra,
+%prb,
+%rmp,
+%prstab,
+%prstper,
+%floatfix,
+%]{revtex4}
+]{revtex4-1}
+
+\usepackage{graphicx}
+%\graphicspath{{.}{jripley_plots/}}
+% Include figure files
+%\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{float}% to force figure placement 
+\usepackage{bm}% bold math
+\usepackage[hidelinks]{hyperref}
+%\usepackage[mathlines]{lineno}% Enable numbering of text and display math
+%\linenumbers\relax % Commence numbering lines
+\usepackage{color}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{slashed}
+
+%\usepackage{fullpage}
+\usepackage{enumerate}
+
+\usepackage{mathalfa,amssymb,amsthm}
+\usepackage{amsmath}
+
+%\usepackage{subfig}
+
+\newcommand{\we}[1]{\textcolor{blue}{WE: #1}}
+\newcommand{\jr}[1]{\textcolor{green}{JR: #1}}
+
+%\newcommand{\ssec}[1]{{{\em #1.}---}}
+\newcommand{\ssec}[1]{\section{#1}}
+
+%\usepackage[showframe,%Uncomment any one of the following lines to test 
+%%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
+%%text={7in,10in},centering,
+%%margin=1.5in,
+%%total={6.5in,8.75in}, top=1.2in, left=0.9in, includefoot,
+%%height=10in,a5paper,hmargin={3cm,0.8in},
+%]{geometry}
+
+\begin{document}
+
+%\preprint{APS/123-QED}
+%=============================================================================
+\title{Binary black hole initial data for $4\partial ST$ gravity}
+%\thanks{A footnote to the article title}%
+%-----------------------------------------------------------------------------
+\author{William E. East}
+\email{weast@perimeterinstitute.ca}
+\affiliation{%
+Perimeter Institute for Theoretical Physics, Waterloo, Ontario N2L 2Y5, Canada.
+}%
+\author{Justin L. Ripley}
+\email{lloydripley@gmail.com}
+\affiliation{%
+DAMTP,
+Centre for Mathematical Sciences,
+University of Cambridge,
+Wilberforce Road, Cambridge CB3 0WA, UK.
+}%
+%=============================================================================
+\begin{abstract}
+We study the dynamics of binary black hole systems for a class of
+scalar-tensor theories.
+We construct an initial value problem for the theory.
+\end{abstract}
+%=============================================================================
+\maketitle
+%=============================================================================
+\ssec{Introduction}%
+We use units with $G=c=1$, with $-+++$ metric signature, and
+$R^{\mu}{}_{\alpha\nu\beta}=\partial_{\nu}\Gamma^{\mu}_{\alpha\beta}-\cdots$.
+Lower-case Greek letters label spacetime indices, while lower-case
+Latin letter label spatial indices.
+%=============================================================================
+\ssec{Equations of motion}%
+Here we briefly review the theories we consider and the arguments
+behind why black holes may be dynamically unstable to scalar
+field perturbations in these theories.
+
+The action for $4\partial ST$ gravity is
+\begin{align}
+\label{eq:leading_order_in_derivatives_action}
+    S
+    =
+    \frac{1}{8\pi}
+   \int d^4x\sqrt{-g}
+   \Big(&
+   \frac{1}{2}R
+   +
+   X
+   -
+   V\left(\phi\right)
+   \nonumber\\
+   &
+   +
+   \alpha\left(\phi\right)X^2
+   +	
+   \beta\left(\phi\right)\mathcal{G}
+   \Big)
+    ,
+\end{align}
+where $X$ is the scalar field kinetic term
+and $\mathcal{G}$ is the Gauss-Bonnet scalar:
+\begin{subequations}
+\begin{align}
+   X
+   \equiv&
+   -
+   \frac{1}{2}g^{\mu\nu}\nabla_{\mu}\phi\nabla_{\nu}\phi
+   ,\\
+   \mathcal{G}
+   \equiv&
+   -
+   \frac{1}{4}
+   \delta^{\alpha\beta\gamma\delta}_{\mu\nu\rho\sigma}
+   R^{\mu\nu}{}_{\alpha\beta}
+   R^{\rho\sigma}{}_{\gamma\delta}
+   ,
+\end{align}
+\end{subequations}
+(here $\delta^{\alpha\beta\gamma\delta}_{\mu\nu\rho\sigma}$
+is the generalized Kronecker delta).
+Varying Eq.~\eqref{eq:leading_order_in_derivatives_action}
+with respect to the scalar and metric fields gives us
+\begin{align}
+\label{eq:eom_edgb_scalar}
+   E^{(\phi)}
+   &\equiv
+   \Box\phi
+   -  
+   V^{\prime}\left(\phi\right)
+   \nonumber\\&
+   +  
+   2\alpha\left(\phi\right)X \Box\phi
+   -  
+   2\alpha\left(\phi\right)
+   \nabla^{\alpha}\phi\nabla^{\beta}\phi\nabla_{\alpha}\nabla_{\beta}\phi
+   \nonumber\\&
+   -  
+   3\alpha^{\prime}\left(\phi\right)X^2
+   +  
+   \beta^{\prime}\left(\phi\right)\mathcal{G}
+   =
+   0
+   ,\\
+\label{eq:eom_edgb_tensor}
+   E^{(g)}_{\alpha\beta}
+   &\equiv
+   R_{\alpha\beta}
+   -  
+   \frac{1}{2}g_{\alpha\beta}R
+   \nonumber\\&
+   -  
+   \nabla_{\alpha}\phi\nabla_{\beta}\phi
+   +  
+   \left(-X+V\left(\phi\right)\right)g_{\alpha\beta}
+   \nonumber\\&
+   -  
+   2\alpha\left(\phi\right)X\nabla_{\alpha}\phi\nabla_{\beta}\phi
+   -  
+   \alpha\left(\phi\right)X^2g_{\alpha\beta}
+   \nonumber\\&
+   +  
+   2\delta^{\mu\nu\gamma\delta}_{\sigma\rho\eta(\alpha}
+   g_{\beta)\delta}R^{\sigma\rho}{}_{\mu\nu}
+   \nabla^{\eta}\nabla_{\gamma}\beta\left(\phi\right) 
+   =
+   0
+   .
+\end{align}
+%=============================================================================
+\ssec{Puncture-type binary black hole initial data}%
+On our initial data surface we must satisfy the generalizations of
+the Hamiltonian $\mathcal{H}$ and momentum $\mathcal{M}$ constraints:
+\label{eq:constraints}
+\begin{align}
+\label{eq:hamiltonian_constraint}
+   \mathcal{H}
+   \equiv&
+   n_{\alpha}n^{\beta}E^{(g)}_{\alpha\beta}
+   \nonumber\\
+   =&
+   \frac{1}{2}h^{\alpha\beta}h^{\gamma\delta}R_{\alpha\gamma\beta\delta}
+   \nonumber\\&
+   -
+   \frac{1}{2}h^{\alpha\beta}D_{\alpha}\phi D_{\beta}\phi
+   -
+   V\left(\phi\right)
+   \nonumber\\&
+   -  
+   2\alpha\left(\phi\right)X\left(n^{\alpha}\nabla_{\alpha}\phi\right)^2
+   +  
+   \alpha\left(\phi\right)X^2
+   \nonumber\\&
+   +  
+   2n^{\alpha}n_{\delta}
+   \delta^{\mu\nu\gamma\delta}_{\rho\sigma\eta\alpha}
+   R^{\rho\sigma}{}_{\mu\nu}\nabla^{\eta}\nabla_{\gamma}\beta\left(\phi\right)
+   \\
+\label{eq:momentum_constraint}
+   \mathcal{M}_{\lambda}
+   \equiv&
+   n_{\alpha}h^{\beta}{}_{\lambda}E^{(g)}_{\alpha\beta}
+   \nonumber\\
+   =&
+   n^{\alpha}h^{\beta}{}_{\lambda}R_{\alpha\beta}
+   \nonumber\\&
+   -  
+   n^{\alpha}\nabla_{\alpha}\phi D_{\lambda}\phi
+   \nonumber\\&
+   -  
+   2\alpha\left(\phi\right)X
+   n^{\alpha}\nabla_{\alpha}\phi D_{\lambda}\phi
+   \nonumber\\&
+   +  
+   2n_{\alpha}h^{\beta}{}_{\lambda}
+   \delta^{\mu\nu\gamma\alpha}_{\rho\sigma\eta\beta}
+   R^{\rho\sigma}{}_{\mu\nu}
+   \nabla_{\gamma}\nabla^{\eta}\beta\left(\phi\right)
+   .
+\end{align}
+
+Before presenting the general equations one needs to solve,
+we not that if we choose $\phi=\partial_t\phi=V=0$ on the initial data slice,
+then the constraint equations reduce to those of vacuum GR\cite{East:2020hgw}.
+In this case, binary black hole initial data solves the constraint
+equations for $4\partial ST$ gravity,
+and we could use the \texttt{twopunctures} code as-is.
+Solving for more general initial data requires us to solve
+the full constraint equations.
+
+When $\phi$ and $\partial_t\phi$ are not equal to zero,
+the constraint equations remain elliptic equations
+(i.e. they do not involve
+second time derivatives of the metric and scalar field;
+for a derivation of this fact see
+Appendix~\ref{eq:conformal_decomp_derivation}).
+%=============================================================================
+\ssec{Methodology}%
+
+We numerically evolve the full ESBG equations of motion (EOM)
+using the modified generalized harmonic
+formulation~\cite{Kovacs:2020pns,Kovacs:2020ywu}
+as described in Ref.~\cite{East:2020hgw}.
+We use similar choices for the gauge, numerical parameters, etc. as in
+Ref.~\cite{East:2020hgw},
+except that we find the scalarized BHs evolved here also benefit from 
+the addition of long wavelength constraint damping obtained by setting
+$\rho=-0.5$ in Eq.~(2) of Ref.~\cite{East:2020hgw}.
+%=============================================================================
+\ssec{Results}
+   Binary black hole waveforms? $r\times\psi_4$ and $r\times\phi$?
+%=============================================================================
+\ssec{conclusion}%
+
+\ssec{acknowledgements}%
+w.e. acknowledges support from an nserc discovery grant.
+this research was
+supported in part by perimeter institute for theoretical physics.  research at
+perimeter institute is supported by the government of canada through the
+department of innovation, science and economic development canada and by the
+province of ontario through the ministry of research, innovation and science.
+this research was enabled in part by support provided by scinet
+(www.scinethpc.ca/) and compute canada (www.computecanada.ca).
+some of the simulations presented in this article were performed on
+computational resources managed and supported by princeton research computing,
+a consortium of groups including the princeton institute for
+computational science and engineering (picscie)
+and the office of information technology's high performance
+computing center and visualization laboratory at princeton university.
+
+\bibliographystyle{apsrev4-1.bst}
+\bibliography{../mod_grav}
+
+\appendix
+%=============================================================================
+\section{Derivation of conformal decomposition of the Hamiltonian
+and momentum constraint equations}
+\label{eq:conformal_decomp_derivation}
+%=============================================================================
+\subsection{General equations}
+\label{eq:general_id_eqns}
+
+   Here we review York's transverse-traceless procedure to construct
+maximal, conformally flat initial data, and derive the constraint
+equations for $4\partial ST$ gravity in that formalism.
+
+We begin by foliating the spacetime with spatial sections with unit
+normal vectors $n^{\alpha}$. We split up the metric as
+\begin{align}
+   g^{\alpha\beta}
+   =
+   -
+   n^{\alpha}n^{\beta}
+   +
+   h^{\alpha\beta}
+   .
+\end{align}
+We next perform the usual $1+3$ dimensional split of the spacetime metric:
+\begin{align}
+   g_{\alpha\beta}dx^{\alpha}dx^{\beta}
+   =
+   -
+   N^2dt^2
+   +
+   h_{ij}
+   \left(dx^i+N^tdt\right)\left(dx^j+N^jdt\right)
+   .
+\end{align}
+The intrinsic metric to each spatial section is $h_{ij}$,
+$N$ is the lapse, and $N^i$ is the shift. The spatial
+sections have normal gradient $n_{\alpha}=(-N,0,0,0)$.
+The extrinsic curvature to the spatial sections is
+\begin{subequations}
+\begin{align}
+   K_{\alpha\beta}
+   \equiv&
+   -
+   h_{\alpha}{}^{\mu}h_{\beta}{}^{\nu}\nabla_{\mu}n_{\nu}
+   ,\\
+   \implies
+   K_{ij}
+   =&
+   -
+   \frac{1}{2N}
+   \left(
+      \partial_th_{ij}
+      -
+      D_iN_j
+      -
+      D_jN_i
+   \right)
+   .
+\end{align}
+\end{subequations}
+We will also make use of the notation
+\begin{subequations}
+\begin{align}
+   a_{\alpha}
+   \equiv&
+   n^{\beta}\nabla_{\beta}n_{\alpha}
+   ,\\
+   K_{\phi}
+   \equiv&
+   -\frac{1}{2}\mathcal{L}_n\phi
+   =
+   -\frac{1}{2}n^{\alpha}\nabla_{\alpha}\phi
+   .
+\end{align}
+\end{subequations}
+Under the $1+3$ decomposition the ESGB contribution
+to the Hamiltonian and momentum constraint is
+\begin{align}
+\label{eq:hamiltonian_constraint_3p1}
+   \mathcal{H}^{(GB)}
+   =&
+   2n^{\alpha}n_{\delta}
+   \delta^{\mu\nu\gamma\delta}_{\rho\sigma\eta\alpha}
+   R^{\rho\sigma}{}_{\mu\nu}
+   \nabla^{\eta}\nabla_{\gamma}\beta\left(\phi\right)
+   ,\nonumber\\
+   =&
+   2n^{\alpha}n_{\delta}
+   \delta^{\mu\nu\gamma\delta}_{\rho\sigma\eta\alpha}
+   \left(
+      h^{\rho\rho'}h^{\sigma\sigma'}
+      h^{\mu'}{}_{\mu}h^{\nu'}{}_{\nu}
+      R_{\rho'\sigma'\mu'\nu'}
+   \right)
+   \left(
+      h^{\eta\eta'}h^{\gamma'}{}_{\gamma}
+      \nabla_{\eta'}\nabla_{\gamma'}\beta\left(\phi\right)
+   \right)
+   ,\nonumber\\
+   =&
+   2n^{\alpha}n_{\delta}
+   \delta^{\mu\nu\gamma\delta}_{\rho\sigma\eta\alpha}
+   \left(
+      {}^{(3)}R^{\rho\sigma}{}_{\mu\nu}
+      +
+      2K^{\rho}{}_{\mu}K^{\sigma}{}_{\nu}
+   \right)
+   \left(
+      D^{\eta}D_{\gamma}\beta\left(\phi\right)
+      +
+      K^{\eta}{}_{\gamma}B\left(\phi\right)
+   \right)
+   ,\nonumber\\
+   =&
+   -2
+   \delta^{mng}_{rse}
+   \left(
+      {}^{(3)}R^{rs}{}_{mn}
+      +
+      2K^{r}{}_{m}K^{s}{}_{n}
+   \right)
+   \left(
+      D^{e}D_{g}\beta\left(\phi\right)
+      +
+      K^{e}{}_{g}B\left(\phi\right)
+   \right)
+   .
+\end{align}
+The ESGB contribution to the momentum constraint is more complicated:
+\begin{align}
+   \label{eq:momentum_constraint_3p1}
+   \mathcal{M}^{(GB)}_{\lambda}
+   =&
+   2n_{\alpha}h^{\beta}{}_{\lambda}
+   \delta^{\mu\nu\gamma\alpha}_{\rho\sigma\eta\beta}
+   R^{\rho\sigma}{}_{\mu\nu}
+   \nabla_{\gamma}\nabla^{\eta}\beta\left(\phi\right)
+   ,\\
+   =&
+   -
+   2n_{\alpha}h^{\beta}{}_{\lambda}
+   \delta^{\mu\nu\gamma\alpha}_{\rho\sigma\eta\beta}
+   \Big(
+      \left(
+         -
+         2n^{\rho}n_{\rho'}h^{\sigma}{}_{\sigma'}
+         h_{\mu}{}^{\mu'}h_{\nu}{}^{\nu'}
+         R^{\rho'\sigma'}{}_{\mu'\nu'}
+      \right)
+      \left(
+         h_{\gamma}{}^{\gamma'}h^{\eta}{}_{\eta'}
+         \nabla_{\gamma'}\nabla^{\eta'}\beta\left(\phi\right)
+      \right)
+      \nonumber\\&\qquad\qquad\qquad\qquad
+      +
+      \left(
+         h^{\rho}{}_{\rho'}h_{\mu}{}^{\mu'}h_{\nu}{}^{\nu'}
+         R^{\rho'\sigma'}{}_{\mu'\nu'}
+      \right)
+      \left(
+         -h_{\gamma}{}^{\gamma'}n^{\eta}n_{\eta'}
+         \nabla_{\gamma'}\nabla^{\eta'}\beta\left(\phi\right)
+      \right)
+   \Big)
+   \nonumber\\
+   =&
+   .
+\end{align}
+Putting everything together, we see that the Hamiltonian
+and momentum constraints reduce to
+\begin{subequations}
+\label{eqs:full_3p1_constraints}
+\begin{align}
+   \mathcal{H}
+   =&
+   \frac{1}{2}\left(
+      {}^{(3)}R
+      +
+      K^2
+      -
+      K_{ij}K^{ij}
+   \right)
+   -
+   2\delta^{ijk}_{pqr}\left(
+      {}^{(3)}R^{pq}{}_{ij}
+      +
+      2K^p{}_iK^q{}_j
+   \right)
+   \left(
+      D^rD_k\beta\left(\phi\right)
+      +
+      K^r{}_kB\left(\phi\right)
+   \right)
+   -
+   E
+   =
+   0
+   ,\\
+   \mathcal{M}^k
+   =&
+   -
+   D_j\left(
+      K^{kj}
+      -
+      h^{kj}K
+   \right)
+   \nonumber\\&
+   +
+   \cdots
+   \nonumber\\&
+   +
+   p^i
+   =
+   0
+   .
+\end{align}
+\end{subequations}
+
+From Eqs.~\eqref{eqs:full_3p1_constraints}
+we see that the Hamiltonian and momentum constraint
+equations for $4\partial ST$ gravity
+are fundamentally ``elliptic'' type equations; i.e.
+they do not involve second time derivatives of either the metric
+or scalar field.
+%=============================================================================
+\subsection{Conformally flat, time symmetric initial data}
+\label{eq:cfts_id}
+We consider initial data of the form:
+\begin{align}
+   h_{ij}
+   =
+   \psi^4\delta_{ij}
+   ,\qquad
+   K_{ij}
+   =
+   0
+   ,\qquad
+   B\left(\phi\right)
+   =
+   0
+   ,
+\end{align}
+where $\delta_{ij}$ is the flat metric.
+With this initial data the momentum constraint is
+trivially satisfied (including $p^i=0$),
+so all we need to do is solve
+for the conformal factor $\psi$ in the Hamiltonian constraint.
+
+The Hamiltonian constraint is
+\begin{align}
+   \mathcal{H}
+   =&
+   \frac{1}{2}{}^{(3)}R
+   -
+   2\delta^{mng}_{rse}
+   \left({}^{(3)}R^{rs}{}_{mn}\right)
+   \left(D^{e}D_{g}\beta\left(\phi\right)\right)
+   -
+   E
+   \nonumber\\
+   =&
+   -
+   4\frac{1}{\psi^5}\partial_i\partial^i\psi
+   +
+   8\delta^{mg}_{se}
+   \left(\partial^e\partial_g\beta\left(\phi\right)\right)
+   \frac{1}{\psi}\left(\partial_m\partial^s\psi\right)
+   \nonumber\\
+   &
+   -
+   8\delta^{mg}_{se}
+   \left(\partial^e\partial_g\beta\left(\phi\right)\right)
+   \frac{1}{\psi^2}\left(\partial_m\psi \partial^s\psi\right)
+   -
+   4\left(
+      f^{qs}\delta^{mng}_{rse}
+      \partial^e\partial_g\beta\left(\phi\right)
+   \right)
+   P^r_{ml}P^l_{qn}
+   -
+   E
+   =
+   0
+   ,
+\end{align}
+With our initial data choice we have
+\begin{align}
+   X
+   =
+   -
+   \frac{1}{2}\frac{1}{\psi^4}\delta^{ij}\partial_i\phi \partial_j\phi
+   .
+\end{align}
+Multiplying the Hamiltonian constraint through
+by $-\psi^5/8$, the principle symbol of this system is
+\begin{align}
+   \mathcal{P}^{(\mathcal{H})}\left(\xi\right)
+   =
+   \left(
+      \left(
+         1
+         -
+         2\psi^4\partial_kD^k\beta\left(\phi\right)
+      \right)
+      f^{ij}
+      +
+      2\psi^4D^iD^j\beta\left(\phi\right)
+   \right)
+   \xi_i\xi_j 
+   .
+\end{align}
+As long as $\psi^4D_iD_j\beta\left(\phi\right)$ is small enough,
+we should expect the Hamiltonian constraint to remain an elliptic
+equation for $\psi$.
+%=============================================================================
+\subsection{Conformal thin sandwich}
+\label{eq:cts}
+We set
+\begin{align}
+   h_{ij}
+   =
+   \psi^4\delta_{ij}
+   ,\qquad
+   K_{ij}
+   =
+   \frac{1}{\psi^2}\left(
+      \partial_iV_j
+      +
+      \partial_jV_i
+      -
+      \frac{2}{3}\delta_{ij}\partial_kV^k
+   \right)
+   .
+\end{align}
+%=============================================================================
+\section{Useful identities}
+\label{sec:useful_identities}
+
+Some useful identities are
+\begin{subequations}
+\begin{align}
+   h_{\alpha}{}^{\alpha'}h_{\beta}{}^{\beta'}
+   h_{\gamma}{}^{\gamma'}h_{\delta}{}^{\delta'}
+   R_{\alpha'\beta'\gamma'\delta'}
+   =&
+   {}^{(3)}R_{\alpha\beta\gamma\delta}
+   +
+   K_{\alpha\gamma}K_{\beta\delta}
+   -
+   K_{\alpha\delta}K_{\beta\gamma}
+   ,\\
+   h_{\alpha}{}^{\alpha'}h_{\beta}{}^{\beta'}
+   h_{\gamma}{}^{\gamma'}n^{\delta'}
+   R_{\alpha'\beta'\gamma'\delta'}
+   =&
+   D_{\beta}K_{\alpha\gamma}
+   -
+   D_{\alpha}K_{\beta\gamma}
+   ,\\
+   h_{\alpha}{}^{\alpha'}h_{\gamma}{}^{\gamma'}
+   n^{\beta'}n^{\delta'}
+   R_{\alpha'\beta'\gamma'\delta'}
+   =&
+   \mathcal{L}_nK_{\alpha\gamma}
+   +
+   \frac{1}{N}D_{\alpha}D_{\gamma}N
+   +
+   K_{\alpha\beta}K^{\beta}{}_{\gamma}
+   ,\\
+   h_{\alpha}{}^{\alpha'}h_{\beta}{}^{\beta'}
+   \nabla_{\alpha'}\nabla_{\beta'}\phi
+   =&
+   D_{\alpha}D_{\beta}\phi
+   +
+   K_{\alpha\beta}\mathcal{L}_n\phi
+   ,\\
+   h_{\alpha}{}^{\alpha'}n^{\beta'}
+   \nabla_{\alpha'}\nabla_{\beta'}\phi
+   =&
+   D_{\alpha}\left(\mathcal{L}_n\phi\right)
+   +
+   K_{\alpha}{}^{\beta}D_{\beta}\phi
+   ,\\
+   n^{\alpha'}n^{\beta'}
+   \nabla_{\alpha'}\nabla_{\beta'}\phi
+   =&
+   \mathcal{L}_n\left(\mathcal{L}_n\phi\right)
+   -
+   a^{\alpha}D_{\alpha}\phi
+   .
+\end{align}
+\end{subequations}
+%=============================================================================
+\section{Spatial conformal transformation}
+Under the conformal transformation
+\begin{subequations}
+\begin{align}
+   h_{ij}
+   =&
+   \psi^4\tilde{h}_{ij}
+   ,\\
+   K_{ij}
+   =&
+   \psi^{-2}\tilde{A}_{ij}
+   +
+   \frac{1}{3}K h_{ij}
+   ,\\
+   K_{\phi}
+   =&
+   \psi^{-6}\tilde{K}_{\phi}
+   ,
+\end{align}
+\end{subequations}
+we have
+\begin{subequations}
+\begin{align}
+   {}^{(3)}\Gamma^k_{ij}
+   =&
+   {}^{(3)}\tilde{\Gamma}^k_{ij}
+   +
+   2\left(
+      \delta^k_i\tilde{D}_j\ln\psi
+      +
+      \delta^k_j\tilde{D}_i\ln\psi
+      -
+      \tilde{h}_{ij}\tilde{D}^k\ln\psi
+   \right)
+   \equiv
+   {}^{(3)}\tilde{\Gamma}^k_{ij}
+   +
+   \mathcal{P}^k_{ij}
+   ,\\
+   D_iD_j\phi
+   =&
+   \tilde{D}_i\tilde{D}_j\phi
+   -
+   \mathcal{P}^k_{ij}\tilde{D}_k\phi
+   ,\\
+   {}^{(3)}R^{ik}{}_{jl}
+   =&
+   \psi^{-4}{}^{(3)}\tilde{R}^{ik}{}_{jl}
+   -
+   8\psi^{-5}\delta^{[i}_{[j}\tilde{D}^{k]}\tilde{D}_{l]}\psi
+   +
+   24\psi^{-6}\delta^{[i}_{[j}\tilde{D}^{k]}\psi\tilde{D}_{l]}\psi
+   -
+   4\psi^{-6}\delta^{ik}_{jl}\left(\tilde{D}\psi\right)^2
+   ,\\
+   D^jK_i^k
+   =&
+   \psi^{-10}\tilde{D}^j\tilde{A}_i^k
+   +
+   \frac{1}{3}\psi^{-4}\tilde{D}^j\psi\delta^k_i
+   -
+   6\psi^{-10}\tilde{D}^j\tilde{A}^k_i
+   \nonumber\\
+   &
+   +
+   2\psi^{-10}\left(
+      \tilde{h}^{jk}\tilde{A}^p_i\tilde{D}_p\ln\psi
+      +  
+      \delta^j_i\tilde{A}^{kp}\tilde{D}_p\ln\psi
+      -
+      \tilde{A}^j_i\tilde{D}^k\ln\psi
+      -
+      \tilde{A}^{jk}\tilde{D}_i\ln\psi
+   \right)
+   .
+\end{align}
+\end{subequations}
+%=============================================================================
+\end{document}
+
