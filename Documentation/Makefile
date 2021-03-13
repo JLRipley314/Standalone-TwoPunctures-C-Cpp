@@ -1,5 +1,5 @@
 all:
-	latex two_punctures
-	bibtex two_punctures
-	latex two_punctures
-	pdflatex two_punctures.tex
+	latex mod_harm_twopunctures
+	bibtex mod_harm_twopunctures 
+	latex mod_harm_twopunctures 
+	pdflatex mod_harm_twopunctures.tex
