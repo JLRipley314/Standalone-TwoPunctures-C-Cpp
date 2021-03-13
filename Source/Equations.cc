@@ -20,7 +20,7 @@ using namespace Utilities;
 /* U.d22[ivar]  = U[ivar]_yy;*/
 /* U.d23[ivar]  = U[ivar]_yz;*/
 /* U.d33[ivar]  = U[ivar]_zz;*/
-
+/*=========================================================================*/
 double
 TwoPunctures::BY_KKofxyz (double x, double y, double z)
 {
@@ -63,12 +63,24 @@ TwoPunctures::BY_KKofxyz (double x, double y, double z)
     {				
       /* Bowen-York-Curvature */
       double Aij =
-	+ 1.5 * (par_P_plus[i] * n_plus[j] + par_P_plus[j] * n_plus[i]
-                 + np_Pp * n_plus[i] * n_plus[j]) / r2_plus
-	+ 1.5 * (par_P_minus[i] * n_minus[j] + par_P_minus[j] * n_minus[i]
-		 + nm_Pm * n_minus[i] * n_minus[j]) / r2_minus
-	- 3.0 * (np_Sp[i] * n_plus[j] + np_Sp[j] * n_plus[i]) / r3_plus
-	- 3.0 * (nm_Sm[i] * n_minus[j] + nm_Sm[j] * n_minus[i]) / r3_minus;
+	+ 1.5 * (
+              par_P_plus[i] * n_plus[j] 
+            + par_P_plus[j] * n_plus[i]
+            + np_Pp * n_plus[i] * n_plus[j]
+            ) / r2_plus
+	+ 1.5 * (
+              par_P_minus[i] * n_minus[j] 
+            + par_P_minus[j] * n_minus[i]
+	    + nm_Pm * n_minus[i] * n_minus[j]
+            ) / r2_minus
+	- 3.0 * (
+              np_Sp[i] * n_plus[j] 
+            + np_Sp[j] * n_plus[i]
+            ) / r3_plus
+	- 3.0 * (
+              nm_Sm[i] * n_minus[j] 
+            + nm_Sm[j] * n_minus[i]
+            ) / r3_minus;
       if (i == j)
 	Aij -= +1.5 * (np_Pp / r2_plus + nm_Pm / r2_minus);
       AijAij += Aij * Aij;
@@ -77,7 +89,7 @@ TwoPunctures::BY_KKofxyz (double x, double y, double z)
 
   return AijAij;
 }
-
+/*=========================================================================*/
 void
 TwoPunctures::BY_Aijofxyz (double x, double y, double z, double Aij[3][3])
 { 
@@ -85,10 +97,12 @@ TwoPunctures::BY_Aijofxyz (double x, double y, double z, double Aij[3][3])
   double r2_minus = (x + par_b) * (x + par_b) + y * y + z * z;
   r2_plus  = sqrt (pow (r2_plus, 2)  + pow (TP_epsilon, 4));
   r2_minus = sqrt (pow (r2_minus, 2) + pow (TP_epsilon, 4));
+
   if (r2_plus < pow(TP_Tiny,2))
     r2_plus = pow(TP_Tiny,2);
   if (r2_minus < pow(TP_Tiny,2))
     r2_minus = pow(TP_Tiny,2);
+
   double r_plus  = sqrt (r2_plus);
   double r_minus = sqrt (r2_minus);
   double r3_plus = r_plus * r2_plus;
@@ -121,14 +135,27 @@ TwoPunctures::BY_Aijofxyz (double x, double y, double z, double Aij[3][3])
   for (int i = 0; i < 3; i++)
   {
     for (int j = 0; j < 3; j++)
-    {				/* Bowen-York-Curvature :*/
+    {				
+      /* Bowen-York-Curvature :*/
       Aij[i][j] =
-        + 1.5 * (par_P_plus[i] * n_plus[j] + par_P_plus[j] * n_plus[i]
-		 + np_Pp * n_plus[i] * n_plus[j]) / r2_plus
-	+ 1.5 * (par_P_minus[i] * n_minus[j] + par_P_minus[j] * n_minus[i]
-		 + nm_Pm * n_minus[i] * n_minus[j]) / r2_minus
-	- 3.0 * (np_Sp[i] * n_plus[j] + np_Sp[j] * n_plus[i]) / r3_plus
-	- 3.0 * (nm_Sm[i] * n_minus[j] + nm_Sm[j] * n_minus[i]) / r3_minus;
+        + 1.5 * (
+              par_P_plus[i] * n_plus[j] 
+            + par_P_plus[j] * n_plus[i]
+	    + np_Pp * n_plus[i] * n_plus[j]
+            ) / r2_plus
+	+ 1.5 * (
+              par_P_minus[i] * n_minus[j] 
+            + par_P_minus[j] * n_minus[i]
+	    + nm_Pm * n_minus[i] * n_minus[j]
+            ) / r2_minus
+	- 3.0 * (
+              np_Sp[i] * n_plus[j] 
+            + np_Sp[j] * n_plus[i]
+            ) / r3_plus
+	- 3.0 * (
+              nm_Sm[i] * n_minus[j] 
+            + nm_Sm[j] * n_minus[i]
+            ) / r3_minus;
       if (i == j)
 	Aij[i][j] -= +1.5 * (np_Pp / r2_plus + nm_Pm / r2_minus);
     }
@@ -147,16 +174,21 @@ TwoPunctures::NonLinEquations (double rho_adm,
   double r_minus = sqrt ((x + par_b) * (x + par_b) + y * y + z * z);
 
   double psi =
-    1. + 0.5 * par_m_plus / r_plus + 0.5 * par_m_minus / r_minus + U.d0[0];
+      1. 
+    + 0.5 * par_m_plus / r_plus 
+    + 0.5 * par_m_minus / r_minus + U.d0[0]
+    ;
   double psi2 = pow(psi,2);
   double psi7 = pow(psi,7);
 
   values[0] =
-    U.d11[0] + U.d22[0] + U.d33[0] + 0.125 * BY_KKofxyz (x, y, z) / psi7 +
-    2.0 * Pi / psi2/psi * rho_adm;
+      U.d11[0] 
+    + U.d22[0] 
+    + U.d33[0] 
+    + 0.125 * BY_KKofxyz (x, y, z) / psi7 
+    + 2.0 * Pi / psi2/psi * rho_adm;
 
 }
-
 /*============================================================================*/
 /* Linear Equations */
 /*============================================================================*/
@@ -170,13 +202,19 @@ TwoPunctures::LinEquations (double A, double B, double X, double R,
   double r_minus = sqrt ((x + par_b) * (x + par_b) + y * y + z * z);
 
   double psi =
-    1. + 0.5 * par_m_plus / r_plus + 0.5 * par_m_minus / r_minus + U.d0[0];
+      1. 
+    + 0.5 * par_m_plus / r_plus 
+    + 0.5 * par_m_minus / r_minus 
+    + U.d0[0]
+    ;
   double psi8 = pow(psi,8);
 
-  values[0] = dU.d11[0] + dU.d22[0] + dU.d33[0]
-    - 0.875 * BY_KKofxyz (x, y, z) / psi8 * dU.d0[0];
+  values[0] = 
+       dU.d11[0] 
+     + dU.d22[0] 
+     + dU.d33[0]
+    - 0.875 * BY_KKofxyz (x, y, z) / psi8 * dU.d0[0]
+    ;
 }
-
-/*-----------------------------------------------------------*/
-
+/*============================================================================*/
 } // namespace TP
