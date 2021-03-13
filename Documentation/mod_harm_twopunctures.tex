@@ -91,21 +91,28 @@ Wilberforce Road, Cambridge CB3 0WA, UK.
    We describe the use of multiple black hole pucture-type initial data
    for evolution using the generalized harmonic formulation of the
    Einstein equations.
+   Each section can essentially be read independently, in no particular order.
+   We use units with $G=c=1$, with $-+++$ metric signature, and
+   $R^{\mu}{}_{\alpha\nu\beta}=\partial_{\nu}\Gamma^{\mu}_{\alpha\beta}-\cdots$.
+   Lower-case Greek letters label spacetime indices, while lower-case
+   Latin letter label spatial indices.
 \end{abstract}
 %=============================================================================
 \maketitle
 %=============================================================================
 \ssec{The code}%
-We use units with $G=c=1$, with $-+++$ metric signature, and
-$R^{\mu}{}_{\alpha\nu\beta}=\partial_{\nu}\Gamma^{\mu}_{\alpha\beta}-\cdots$.
-Lower-case Greek letters label spacetime indices, while lower-case
-Latin letter label spatial indices.
-
-Much of the necessary physics background is covered in the Appendices.
-
-This code is an extension of the \
-%=============================================================================
-\appendix
+The code computes puncture initial data for two black holes, which
+we label $1$ and $2$.
+The freely specifiable variables are the puncture locations,
+momenta, and spins, the lapse and shift, and the gauge source terms
+$H^0$ and $H^i$:
+\begin{align}
+   P_{(1)}^i, S_{(1)}^i, P_{(2)}^i, S_{(2)}^i, \alpha, \beta^i, H^0, H^i
+   .
+\end{align}
+The code solves the momentum constraint to determine $\gamma_{ij}$.
+With that, we can determine $g_{\mu\nu}$ and $\partial_{\alpha}g_{\mu\nu}$
+on the initial data surface.
 %=============================================================================
 \ssec{Puncture initial data}%
 Nontrivial puncture data for multiple black hole spacetimes was first
@@ -142,6 +149,10 @@ We consider initial data of the form
    K_{ij}
    =&
    \psi^{-2}
+   \tilde{A}_{ij}
+   ,\\
+   \tilde{A}_{ij}
+   \equiv&
    \left(
       \partial_iV_j
    +  \partial_jV_i
@@ -150,12 +161,12 @@ We consider initial data of the form
    .
 \end{align}
 \end{subequations}
-   This initial data is (spatially)
+This initial data is (spatially)
 conformally flat and maximally sliced ($K=0$).
 The Hamiltonian and momentum constraints reduce to
 \begin{align}
    \Delta \psi
-+  \frac{1}{8}\psi^6K_{ij}K^{ij}
+   +  \frac{1}{8}\psi^{-7}\tilde{A}_{ij}\tilde{A}^{ij}
    =&
    0
    ,\\
@@ -181,17 +192,35 @@ The Hamiltonian and momentum constraints reduce to
    \right)
    .
 \end{align} 
-We can solve for the conformal factor with the ansatz
+We plug in the following ansatz for the conformal factor
 \begin{align}
    \psi
    =
    1
+   +  \frac{1}{\zeta}
+   +  u
+   ,\qquad
+   \frac{1}{\zeta}
+   \equiv
 +  \sum_{n=1}^N\frac{M_{(n)}}{2|x_{(n)}|}
-+  u
    ,
 \end{align} 
-that is, we solve for the function $u$, with is $C^{\infty}$ everywhere
-expect at the punctures, where it is $C^2$.
+into the Hamiltonian constraint to obtain a nonlinear elliptic
+equation for the variable $u$:
+\begin{align}
+\label{eq:u_eqn}
+   \Delta u 
+   + 
+   \frac{1}{8}\zeta^7\tilde{A}_{ij}\tilde{A}^{ij}
+   \left(1+\zeta+\zeta u\right)^{-7}
+   =
+   0
+   .
+\end{align}
+From this equation we can conclude that $u$ is $C^{\infty}$ everywhere
+in cartesian coordinates, except at the punctures, where it is only $C^2$.
+Unlike the momentum constraint, there is no known analytic
+solution to Eq.~\eqref{eq:u_eqn}, so it needs to be solved numerically.
 
 In summary, with puncture initial data we can freely specify
 $K_{ij}$ via the Bown-York solution \cite{eq:Bowen_York_sol},
@@ -293,8 +322,10 @@ Eqs.~\eqref{eq:GH_evo_lapse_shift}, which we repeat here:
    .
 \end{align}   
 \end{subequations}
-That is, we can specify the time derivatives of the lapse and shift
-by picking the initial gauge source terms $H^0$ and $H^i$.
+We can either specify the time derivatives of the lapse and shift
+by picking the initial gauge source terms $H^0$ and $H^i$;
+alternatively we can specify $H^0$ and $H^i$ once we have chosen
+$\partial_t\alpha$ and $\partial_t\beta^i$.
 
 %=============================================================================
 \section{$1+3$ spacetime slicing and $ADM$ variables}
