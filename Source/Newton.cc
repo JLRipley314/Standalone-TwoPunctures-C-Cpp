@@ -17,7 +17,7 @@ const int N_PlaneRelax = 1;
 const int NRELAX = 200;
 const int Step_Relax = 1;
 
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 double
 TwoPunctures::norm_inf (double const * TP_RESTRICT const F,
           int const ntotal)
@@ -36,7 +36,7 @@ TwoPunctures::norm_inf (double const * TP_RESTRICT const F,
   }
   return dmax;
 }
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::resid (double * TP_RESTRICT const res,
        int const ntotal,
@@ -55,8 +55,7 @@ TwoPunctures::resid (double * TP_RESTRICT const res,
     res[i] = rhs[i] - JFDdv_i;
   }
 }
-
-/* -------------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::LineRelax_al (double * TP_RESTRICT const dv,
               int const j, int const k, int const nvar,
@@ -115,8 +114,7 @@ TwoPunctures::LineRelax_al (double * TP_RESTRICT const dv,
   gsl_vector_free(b);
   gsl_vector_free(x);
 }
-
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::LineRelax_be (double * TP_RESTRICT const dv,
               int const i, int const k, int const nvar,
@@ -174,8 +172,7 @@ TwoPunctures::LineRelax_be (double * TP_RESTRICT const dv,
   gsl_vector_free(b);
   gsl_vector_free(x);
 }
-
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::relax (double * TP_RESTRICT const dv,
        int const nvar, int const n1, int const n2, int const n3,
@@ -184,47 +181,44 @@ TwoPunctures::relax (double * TP_RESTRICT const dv,
        int const * TP_RESTRICT const * TP_RESTRICT const cols,
        double const * TP_RESTRICT const * TP_RESTRICT const JFD)
 {
-  int i, j, k, n;
-
-  for (k = 0; k < n3; k = k + 2)
+  for (int k = 0; k < n3; k = k + 2)
   {
-    for (n = 0; n < N_PlaneRelax; n++)
+    for (int n = 0; n < N_PlaneRelax; n++)
     {
 #pragma omp parallel for schedule(dynamic)
-      for (i = 2; i < n1; i = i + 2)
+      for (int i = 2; i < n1; i = i + 2)
 	LineRelax_be (dv, i, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (i = 1; i < n1; i = i + 2)
+      for (int i = 1; i < n1; i = i + 2)
 	LineRelax_be (dv, i, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (j = 1; j < n2; j = j + 2)
+      for (int j = 1; j < n2; j = j + 2)
 	LineRelax_al (dv, j, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (j = 0; j < n2; j = j + 2)
+      for (int j = 0; j < n2; j = j + 2)
 	LineRelax_al (dv, j, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
     }
   }
-  for (k = 1; k < n3; k = k + 2)
+  for (int k = 1; k < n3; k = k + 2)
   {
-    for (n = 0; n < N_PlaneRelax; n++)
+    for (int n = 0; n < N_PlaneRelax; n++)
     {
 #pragma omp parallel for schedule(dynamic)
-      for (i = 0; i < n1; i = i + 2)
+      for (int i = 0; i < n1; i = i + 2)
 	LineRelax_be (dv, i, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (i = 1; i < n1; i = i + 2)
+      for (int i = 1; i < n1; i = i + 2)
 	LineRelax_be (dv, i, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (j = 1; j < n2; j = j + 2)
+      for (int j = 1; j < n2; j = j + 2)
 	LineRelax_al (dv, j, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
 #pragma omp parallel for schedule(dynamic)
-      for (j = 0; j < n2; j = j + 2)
+      for (int j = 0; j < n2; j = j + 2)
 	LineRelax_al (dv, j, k, nvar, n1, n2, n3, rhs, ncols, cols, JFD);
     }
   }
 }
-
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::TestRelax (int nvar, int n1, int n2, int n3, derivs v,
 	   double *dv)
@@ -275,8 +269,7 @@ TwoPunctures::TestRelax (int nvar, int n1, int n2, int n3, derivs v,
   free_imatrix (cols, 0, ntotal - 1, 0, maxcol - 1);
   free_ivector (ncols, 0, ntotal - 1);
 }
-
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 int
 TwoPunctures::bicgstab (int const nvar, int const n1, int const n2, int const n3,
           derivs v, derivs dv,
@@ -422,11 +415,11 @@ TwoPunctures::bicgstab (int const nvar, int const n1, int const n2, int const n3
   /* free temporary storage */
   free_dvector (r, 0, ntotal - 1);
   free_dvector (p, 0, ntotal - 1);
-/*      free_dvector(ph,  0, ntotal-1);*/
+  /* free_dvector(ph,  0, ntotal-1);*/
   free_derivs (&ph, ntotal);
   free_dvector (rt, 0, ntotal - 1);
   free_dvector (s, 0, ntotal - 1);
-/*      free_dvector(sh,  0, ntotal-1);*/
+  /* free_dvector(sh,  0, ntotal-1);*/
   free_derivs (&sh, ntotal);
   free_dvector (t, 0, ntotal - 1);
   free_dvector (vv, 0, ntotal - 1);
@@ -451,8 +444,7 @@ TwoPunctures::bicgstab (int const nvar, int const n1, int const n2, int const n3
   /* success! */
   return ii + 1;
 }
-
-/* -------------------------------------------------------------------*/
+/*============================================================================*/
 void
 TwoPunctures::Newton (int const nvar, int const n1, int const n2, int const n3,
 	derivs v,
@@ -512,7 +504,5 @@ TwoPunctures::Newton (int const nvar, int const n1, int const n2, int const n3,
   free_derivs (&dv, ntotal);
   free_derivs (&u, ntotal);
 }
-
-/* -------------------------------------------------------------------*/
-
+/*============================================================================*/
 } // namespace TP

@@ -16,7 +16,7 @@ namespace Utilities {
 #define Piq 0.78539816339744830961566084582	/* Pi/4*/
 
 #define TINY 1.0e-20
-#define SWAP(a,b) {double temp=(a);(a)=(b);(b)=temp;}
+inline void swap(double a, double b) {double temp=a; a=b; b=temp;}
 
 void nrerror (char error_text[]);
 int *ivector (long nl, long nh);
@@ -50,20 +50,6 @@ double fourev (double *u, int N, double x);
 double norm1 (double *v, int n);
 double norm2 (double *v, int n);
 double scalarproduct (double *v, double *w, int n);
-
-/*
-typedef nrerror TP_nrerror;
-typedef ivector TP_ivector;
-typedef dvector TP_dvector;
-typedef imatrix TP_imatrix;
-typedef dmatrix TP_dmatrix;
-typedef d3tensor TP_d3tensor;
-typedef free_ivector TP_free_ivector;
-typedef free_dvector TP_free_dvector;
-typedef free_imatrix TP_free_imatrix;
-typedef free_dmatrix TP_free_dmatrix;
-typedef free_d3tensor TP_free_d3tensor;
-*/
 
 } // namespac Utilities
 } // namespace TP

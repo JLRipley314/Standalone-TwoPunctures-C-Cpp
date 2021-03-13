@@ -10,15 +10,14 @@
 
 namespace TP {
 
-
-/** We compile TwoPunctures-Standalone as C++, and C++ does not yet
-    now about the C99 language feature "restrict". If you compile
-    with GCC, you can however use the following. Else just leave
-    it empty.
-    
-    In any case, restrict is a keyword to improve performance at
-    array access.
-**/
+/*========================================================================== 
+ * We compile TwoPunctures-Standalone as C++, and C++ does not yet
+ * now about the C99 language feature "restrict". If you compile
+ * with GCC, you can however use the following. Else just leave
+ * it empty.
+ * In any case, restrict is a keyword to improve performance at
+ * array access.
+ * =========================================================================*/
 #define TP_RESTRICT __restrict__
 
 /* Give MPI information about rank */
@@ -39,17 +38,6 @@ typedef struct DERIVS {
 
 enum GRID_SETUP_METHOD { GSM_Taylor_expansion, GSM_evaluation };
 
-/*
-Files of "TwoPunctures":
-	TwoPunctures.c
-	FuncAndJacobian.c
-	CoordTransf.c
-	Equations.c
-	Newton.c
-	utilities.c (see utilities.h)
-**************************
-*/
-
 class TwoPunctures : public Parameters {
 public:
 
@@ -62,13 +50,24 @@ public:
 	derivs u, v, cf_v;
 	int antisymmetric_lapse, averaged_lapse, pmn_lapse, brownsville_lapse;
 	
-	/* Consructor */
+	/* Constructor */
 
 	TwoPunctures() {
 		nvar = 0; n1 = 0; n2 = 0; n3 = 0;
 	}
-
-	/* Routines in  "TwoPunctures.c"*/
+        /*====================================================================*/
+        /* used by Interpolate */
+        inline double extend(double M, double r) 
+        {
+           return ( 
+              M * (  3./8 * pow(r, 4) / pow(TP_Extend_Radius, 5)
+                  -  5./4 * pow(r, 2) / pow(TP_Extend_Radius, 3) 
+                  +  15./8 / TP_Extend_Radius
+                  )
+           );
+         }
+        /*====================================================================*/
+        /* Routines in  "TwoPunctures.c"*/
 	void set_initial_guess(derivs v);
 	double TestSolution (double A, double B, double X, double R, double phi);
 	void TestVector_w (double *par, int nvar, int n1, int n2, int n3, double *w);

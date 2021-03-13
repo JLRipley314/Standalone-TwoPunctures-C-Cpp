@@ -19,21 +19,21 @@ TwoPunctures::set_initial_guess(derivs v)
 
   double *s_x, *s_y, *s_z;
   double al, A, Am1, be, B, phi, R, r, X;
-  int ivar, i, j, k, i3D, indx;
+  int i3D, indx;
   derivs U;
   FILE *debug_file;
 
   if (solve_momentum_constraint)
     nvar = 4;
 
-  s_x    =new double[n1*n2*n3]();
-  s_y    =new double[n1*n2*n3]();
-  s_z    =new double[n1*n2*n3]();
+  s_x = new double[n1*n2*n3]();
+  s_y = new double[n1*n2*n3]();
+  s_z = new double[n1*n2*n3]();
   allocate_derivs (&U, nvar);
-  for (ivar = 0; ivar < nvar; ivar++)
-    for (i = 0; i < n1; i++)
-      for (j = 0; j < n2; j++)
-        for (k = 0; k < n3; k++)
+  for (int ivar = 0; ivar < nvar; ivar++)
+    for (int i = 0; i < n1; i++)
+      for (int j = 0; j < n2; j++)
+        for (int k = 0; k < n3; k++)
         {
           i3D = Index(ivar,i,j,k,1,n1,n2,n3);
 
@@ -50,19 +50,10 @@ TwoPunctures::set_initial_guess(derivs v)
           /* Calculation of (y,z)*/
           rx3_To_xyz (nvar, s_x[i3D], r, phi, &(s_y[i3D]), &(s_z[i3D]), U);
         }
-  // @TODO where is the function Set_Initial_Guess_for_u implemented!???
-  // When looking in EinsteinInitialData, I find it at
-  /*
-TOVSolver/interface.ccl
-35:CCTK_INT FUNCTION Set_Initial_Guess_for_u(  \
-43:PROVIDES FUNCTION Set_Initial_Guess_for_u \
-44:         WITH TOV_Set_Initial_Guess_for_u \
-  */
-  //// Set_Initial_Guess_for_u(n1*n2*n3, v.d0, s_x, s_y, s_z);
-  for (ivar = 0; ivar < nvar; ivar++)
-    for (i = 0; i < n1; i++)
-      for (j = 0; j < n2; j++)
-        for (k = 0; k < n3; k++)
+  for (int ivar = 0; ivar < nvar; ivar++)
+    for (int i = 0; i < n1; i++)
+      for (int j = 0; j < n2; j++)
+        for (int k = 0; k < n3; k++)
         {
           indx = Index(ivar,i,j,k,1,n1,n2,n3);
           v.d0[indx]/=(-cos(Pih * (2 * i + 1) / n1)-1.0);
@@ -72,9 +63,9 @@ TOVSolver/interface.ccl
   {
     debug_file=fopen("initial.dat", "w");
     assert(debug_file);
-    for (ivar = 0; ivar < nvar; ivar++)
-      for (i = 0; i < n1; i++)
-        for (j = 0; j < n2; j++)
+    for (int ivar = 0; ivar < nvar; ivar++)
+      for (int i = 0; i < n1; i++)
+        for (int j = 0; j < n2; j++)
         {
           al = Pih * (2 * i + 1) / n1;
           A = -cos (al);
@@ -83,16 +74,16 @@ TOVSolver/interface.ccl
           B = -cos (be);
           phi = 0.0;
           indx = Index(ivar,i,j,0,1,n1,n2,n3);
-          U.d0[0] = Am1 * v.d0[indx];        /* U*/
-          U.d1[0] = v.d0[indx] + Am1 * v.d1[indx];        /* U_A*/
-          U.d2[0] = Am1 * v.d2[indx];        /* U_B*/
-          U.d3[0] = Am1 * v.d3[indx];        /* U_3*/
-          U.d11[0] = 2 * v.d1[indx] + Am1 * v.d11[indx];        /* U_AA*/
-          U.d12[0] = v.d2[indx] + Am1 * v.d12[indx];        /* U_AB*/
-          U.d13[0] = v.d3[indx] + Am1 * v.d13[indx];        /* U_AB*/
-          U.d22[0] = Am1 * v.d22[indx];        /* U_BB*/
-          U.d23[0] = Am1 * v.d23[indx];        /* U_B3*/
-          U.d33[0] = Am1 * v.d33[indx];        /* U_33*/
+          U.d0[0] = Am1 * v.d0[indx];                    /* U*/
+          U.d1[0] = v.d0[indx] + Am1 * v.d1[indx];       /* U_A*/
+          U.d2[0] = Am1 * v.d2[indx];                    /* U_B*/
+          U.d3[0] = Am1 * v.d3[indx];                    /* U_3*/
+          U.d11[0] = 2 * v.d1[indx] + Am1 * v.d11[indx]; /* U_AA*/
+          U.d12[0] = v.d2[indx] + Am1 * v.d12[indx];     /* U_AB*/
+          U.d13[0] = v.d3[indx] + Am1 * v.d13[indx];     /* U_AB*/
+          U.d22[0] = Am1 * v.d22[indx];                  /* U_BB*/
+          U.d23[0] = Am1 * v.d23[indx];                  /* U_B3*/
+          U.d33[0] = Am1 * v.d33[indx];                  /* U_33*/
         /* Calculation of (X,R)*/
         AB_To_XR (nvar, A, B, &X, &R, U);
         /* Calculation of (x,r)*/
@@ -122,7 +113,7 @@ TOVSolver/interface.ccl
                 );
         }
     fprintf(debug_file, "\n\n");
-    for (i=n2-10; i<n2; i++)
+    for (int i=n2-10; i<n2; i++)
     {
       double d;
       indx = Index(0,0,i,0,1,n1,n2,n3);
@@ -132,12 +123,12 @@ TOVSolver/interface.ccl
                 (double)s_x[indx], (double)d);
     }
     fprintf(debug_file, "\n\n");
-    for (i=n2-10; i<n2-1; i++)
+    for (int i=n2-10; i<n2-1; i++)
     {
       double d;
       int ip= Index(0,0,i+1,0,1,n1,n2,n3);
       indx = Index(0,0,i,0,1,n1,n2,n3);
-      for (j=-10; j<10; j++)
+      for (int j=-10; j<10; j++)
       {
         d = PunctIntPolAtArbitPosition(0, nvar, n1, n2, n3, v,
                 s_x[indx]+(s_x[ip]-s_x[indx])*j/10,
@@ -147,8 +138,8 @@ TOVSolver/interface.ccl
       }
     }
     fprintf(debug_file, "\n\n");
-    for (i = 0; i < n1; i++)
-      for (j = 0; j < n2; j++)
+    for (int i = 0; i < n1; i++)
+      for (int j = 0; j < n2; j++)
       {
         X = 2*(2.0*i/n1-1.0);
         R = 2*(1.0*j/n2);
@@ -183,8 +174,7 @@ TOVSolver/interface.ccl
   free_derivs (&U, nvar);
   /*exit(0);*/
 }
-
-/* -------------------------------------------------------------------*/
+/*===========================================================================*/
 void
 TwoPunctures::Run ()
 {
@@ -196,9 +186,6 @@ TwoPunctures::Run ()
 
   int imin[3], imax[3];
   int const ntotal = n1 * n2 * n3 * nvar;
-#if 0
-  int percent10 = 0;
-#endif
   static double *F = NULL;
   double admMass;
 
@@ -258,14 +245,12 @@ TwoPunctures::Run ()
       double M_m = target_M_minus;
 
       TP_INFO ( "Attempting to find bare masses.");
-      TP_INFO ( "Target ADM masses: M_p=%g and M_m=%g",
-                  (double) M_p, (double) M_m);
-      TP_INFO ( "ADM mass tolerance: %g", (double) adm_tol);
+      TP_INFO ( "Target ADM masses: M_p=%g and M_m=%g", M_p, M_m);
+      TP_INFO ( "ADM mass tolerance: %g", adm_tol);
 
       /* Loop until both ADM masses are within adm_tol of their target */
       do {
-        TP_INFO ( "Bare masses: mp=%.15g, mm=%.15g",
-                    (double)mp, (double)mm);
+        TP_INFO ( "Bare masses: mp=%.15g, mm=%.15g", mp, mm);
         Newton (nvar, n1, n2, n3, v, Newton_tol, 1);
 
         F_of_v (nvar, n1, n2, n3, v, F, u);
@@ -281,7 +266,7 @@ TwoPunctures::Run ()
         mp_adm_err = fabs(M_p-mp_adm);
         mm_adm_err = fabs(M_m-mm_adm);
         TP_INFO ( "ADM mass error: M_p_err=%.15g, M_m_err=%.15g",
-                    (double)mp_adm_err, (double)mm_adm_err);
+                    mp_adm_err, mm_adm_err);
         
         /* Invert the ADM mass equation and update the bare mass guess so that
            it gives the correct target ADM masses */
@@ -307,9 +292,7 @@ TwoPunctures::Run ()
 
     SpecCoef(n1, n2, n3, 0, v.d0, cf_v.d0);
 
-    TP_INFO (
-		  "The two puncture masses are mp=%.17g and mm=%.17g",
-                (double) mp, (double) mm);
+    TP_INFO ("The two puncture masses are mp=%.17g and mm=%.17g", mp, mm);
 
     up = PunctIntPolAtArbitPosition(0, nvar, n1, n2, n3, v, par_b, 0., 0.);
     um = PunctIntPolAtArbitPosition(0, nvar, n1, n2, n3, v,-par_b, 0., 0.);
@@ -318,17 +301,18 @@ TwoPunctures::Run ()
     mp_adm = (1 + up) * mp + mp * mm / (4. * par_b);
     mm_adm = (1 + um) * mm + mp * mm / (4. * par_b);
 
-    TP_INFO ( "Puncture 1 ADM mass is %g", (double) mp_adm);
-    TP_INFO ( "Puncture 2 ADM mass is %g", (double) mm_adm);
+    TP_INFO ( "Puncture 1 ADM mass is %g", mp_adm);
+    TP_INFO ( "Puncture 2 ADM mass is %g", mm_adm);
 
     /* print out ADM mass, eq.: \Delta M_ADM=2*r*u=4*b*V for A=1,B=0,phi=0 */
     admMass = (mp + mm
                - 4*par_b*PunctEvalAtArbitPosition(v.d0, 0, 1, 0, 0, nvar, n1, n2, n3));
-    TP_INFO ( "The total ADM mass is %g", (double) admMass);
+    TP_INFO ( "The total ADM mass is %g", admMass);
 
-    /*
-      Run this in Mathematica (version 8 or later) with
-        math -script <file>
+    /* ------------------------------------------------------------------------
+     * To obtain the next few lines, run the following commented out section in
+     * Mathematica (version 8 or later) with
+     *   math -script <file>
 
       Needs["SymbolicC`"];
       co = Table["center_offset[" <> ToString[i] <> "]", {i, 0, 2}];
@@ -343,7 +327,7 @@ TwoPunctures::Run ()
       Print[OutputForm@StringReplace[
         ToCCodeString@MapThread[CAssign[#1, CExpression[#2]] &, {JVar, J}], 
         "\"" -> ""]];
-     */
+     * ----------------------------------------------------------------------*/
 
     J1 = -(center_offset[2]*par_P_minus[1]) + center_offset[1]*par_P_minus[2] - center_offset[2]*par_P_plus[1] + center_offset[1]*par_P_plus[2] + par_S_minus[0] + par_S_plus[0];
     J2 = center_offset[2]*par_P_minus[0] - center_offset[0]*par_P_minus[2] + par_b*par_P_minus[2] + center_offset[2]*par_P_plus[0] - center_offset[0]*par_P_plus[2] - par_b*par_P_plus[2] + par_S_minus[1] + par_S_plus[1];
@@ -364,18 +348,17 @@ TwoPunctures::Run ()
   }
 
   if(initial_lapse == "twopunctures")
-      TP_WARN("Please specify a lapse which we can use");
+    TP_WARN("Please specify a lapse which we can use");
   antisymmetric_lapse = (initial_lapse == "twopunctures-antisymmetric");
   averaged_lapse = (initial_lapse == "twopunctures-averaged");
 	pmn_lapse = (initial_lapse == "psi^n");
   if (pmn_lapse)
-		TP_INFO ("Setting initial lapse to psi^%f profile.",
-               (double)initial_lapse_psi_exponent);
+    TP_INFO ("Setting initial lapse to psi^%f profile.",
+             initial_lapse_psi_exponent);
   brownsville_lapse = (initial_lapse == "brownsville");
   if (brownsville_lapse)
-    TP_INFO (  "Setting initial lapse to a Brownsville-style profile "
-               "with exp %f.",
-               (double)initial_lapse_psi_exponent);
+    TP_INFO ("Setting initial lapse to a Brownsville-style profile "
+             "with exp %f.", initial_lapse_psi_exponent);
 
   TP_INFO ("Preparing interpolation of result");
   if (metric_type == "static conformal") {
@@ -390,18 +373,15 @@ TwoPunctures::Run ()
     conformal_state = 0;
   }
 } /* End of TwoPointures_Setup() */
-
-
-/**
- * Interpolation function for an external caller.
- **/
+/*===========================================================================*/
+/* Interpolation function for an external caller. */
+/*===========================================================================*/
 void
 TwoPunctures::Interpolate (const double *pos, double *Q) {
 	double x=pos[0], y=pos[1], z=pos[2];
-        double xx, yy, zz;
-        xx = x - center_offset[0];
-        yy = y - center_offset[1];
-        zz = z - center_offset[2];
+        double xx = x - center_offset[0];
+        double yy = y - center_offset[1];
+        double zz = z - center_offset[2];
 
         /* We implement swapping the x and z coordinates as follows.
            The bulk of the code that performs the actual calculations
@@ -411,20 +391,17 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
            main loop-- we swap everything back.  */
         if (swap_xz) {
           /* Swap the x and z coordinates */
-          SWAP (xx, zz);
+          swap(xx, zz);
         }
 
-        double r_plus
-          = sqrt(pow(xx - par_b, 2) + pow(yy, 2) + pow(zz, 2));
-        double r_minus
-          = sqrt(pow(xx + par_b, 2) + pow(yy, 2) + pow(zz, 2));
+        double r_plus  = sqrt(pow(xx - par_b, 2) + pow(yy, 2) + pow(zz, 2));
+        double r_minus = sqrt(pow(xx + par_b, 2) + pow(yy, 2) + pow(zz, 2));
 
         double U;
         switch (gsm)
         {
         case GSM_Taylor_expansion:
-          U = PunctTaylorExpandAtArbitPosition
-            (0, nvar, n1, n2, n3, v, xx, yy, zz);
+          U = PunctTaylorExpandAtArbitPosition(0, nvar, n1, n2, n3, v, xx, yy, zz);
           break;
         case GSM_evaluation:
           U = PunctIntPolAtArbitPositionFast(0, nvar, n1, n2, n3, cf_v, xx, yy, zz);
@@ -432,7 +409,7 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
         default:
           assert (0);
         }
-        r_plus = pow (pow (r_plus, 4) + pow (TP_epsilon, 4), 0.25);
+        r_plus =  pow (pow (r_plus, 4)  + pow (TP_epsilon, 4), 0.25);
         r_minus = pow (pow (r_minus, 4) + pow (TP_epsilon, 4), 0.25);
         if (r_plus < TP_Tiny)
             r_plus = TP_Tiny;
@@ -441,18 +418,14 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
         double psi1 = 1
           + 0.5 * mp / r_plus
           + 0.5 * mm / r_minus + U;
-#define EXTEND(M,r) \
-          ( M * (3./8 * pow(r, 4) / pow(TP_Extend_Radius, 5) - \
-                 5./4 * pow(r, 2) / pow(TP_Extend_Radius, 3) + \
-                 15./8 / TP_Extend_Radius))
         if (r_plus < TP_Extend_Radius) {
           psi1 = 1
-             + 0.5 * EXTEND(mp,r_plus)
+             + 0.5 * extend(mp,r_plus)
              + 0.5 * mm / r_minus + U;
         }
         if (r_minus < TP_Extend_Radius) {
           psi1 = 1
-             + 0.5 * EXTEND(mm,r_minus)
+             + 0.5 * extend(mm,r_minus)
              + 0.5 * mp / r_plus + U;
         }
         double static_psi = 1;
@@ -486,7 +459,7 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
           ir = 1.0/rp;
 
           if (rp < TP_Extend_Radius) {
-            ir = EXTEND(1., rp);
+            ir = extend(1., rp);
           }
 
           s1 = 0.5* mp *ir;
@@ -517,7 +490,7 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
           ir = 1.0/rp;
 
           if (rp < TP_Extend_Radius) {
-            ir = EXTEND(1., rp);
+            ir = extend(1., rp);
           }
 
           s1 = 0.5* mm *ir;
@@ -592,13 +565,13 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
 
           if (r_plus < TP_Extend_Radius) {
             Q[lapse] =
-              ((1.0 -0.5*EXTEND(mp, r_plus) -0.5* mm/r_minus)
-              /(1.0 +0.5*EXTEND(mp, r_plus) +0.5* mm/r_minus));
+              ((1.0 -0.5*extend(mp, r_plus) -0.5* mm/r_minus)
+              /(1.0 +0.5*extend(mp, r_plus) +0.5* mm/r_minus));
           }
           if (r_minus < TP_Extend_Radius) {
             Q[lapse] =
-              ((1.0 -0.5*EXTEND(mm, r_minus) -0.5* mp/r_plus)
-              /(1.0 +0.5*EXTEND(mp, r_minus) +0.5* mp/r_plus));
+              ((1.0 -0.5*extend(mm, r_minus) -0.5* mp/r_plus)
+              /(1.0 +0.5*extend(mp, r_minus) +0.5* mp/r_plus));
           }
           
           if (averaged_lapse) {
@@ -611,16 +584,16 @@ TwoPunctures::Interpolate (const double *pos, double *Q) {
         if (swap_xz) {
           /* Swap the x and z components of all tensors */
           if (conformal_state >= 2) {
-            /// SWAP (psix[ind], psiz[ind]);
+            /// swap(psix[ind], psiz[ind]);
           }
           if (conformal_state >= 3) {
-            /// SWAP (psixx[ind], psizz[ind]);
-            /// SWAP (psixy[ind], psiyz[ind]);
+            /// swap(psixx[ind], psizz[ind]);
+            /// swap(psixy[ind], psiyz[ind]);
           }
-          SWAP (Q[g11], Q[g33]);
-          SWAP (Q[g12], Q[g23]);
-          SWAP (Q[K11], Q[K33]);
-          SWAP (Q[K12], Q[K23]);
+          swap(Q[g11], Q[g33]);
+          swap(Q[g12], Q[g23]);
+          swap(Q[K11], Q[K33]);
+          swap(Q[K12], Q[K23]);
         } /* if swap_xz */
 
   if (use_sources && rescale_sources)

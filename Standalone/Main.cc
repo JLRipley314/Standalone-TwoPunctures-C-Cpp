@@ -48,8 +48,8 @@ int main() {
 
         int i[dim], points = 20;
 
-	int printIndices[] = { g11, K11, lapse, shift1, -1 };
-	printf("%s %s %s %s %s %s %s\n", "xcoord", "ycoord", "zcoord", "g11", "K11", "lapse", "shift1" );
+	int printIndices[] = { g11, K11, lapse, shift1, shift2, shift2, -1 };
+	printf("%s %s %s %s %s %s %s %s %s\n", "xcoord", "ycoord", "zcoord", "g11", "K11", "lapse", "shift1", "shift2", "shift3" );
 	
 	for(i[0]=0;i[0]<points;i[0]++) {
            pos[0] = xmin + i[0] *  (xmax - xmin) / points;
