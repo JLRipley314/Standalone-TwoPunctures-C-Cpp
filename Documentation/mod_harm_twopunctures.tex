@@ -69,16 +69,7 @@ nofootinbib,
 \newcommand{\we}[1]{\textcolor{blue}{WE: #1}}
 \newcommand{\jr}[1]{\textcolor{green}{JR: #1}}
 
-%\newcommand{\ssec}[1]{{{\em #1.}---}}
 \newcommand{\ssec}[1]{\section{#1}}
-
-%\usepackage[showframe,%Uncomment any one of the following lines to test 
-%%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
-%%text={7in,10in},centering,
-%%margin=1.5in,
-%%total={6.5in,8.75in}, top=1.2in, left=0.9in, includefoot,
-%%height=10in,a5paper,hmargin={3cm,0.8in},
-%]{geometry}
 
 \begin{document}
 
@@ -97,20 +88,32 @@ Wilberforce Road, Cambridge CB3 0WA, UK.
 }%
 %=============================================================================
 \begin{abstract}
-We study the dynamics of binary black hole systems for a class of
-scalar-tensor theories.
-We construct an initial value problem for the theory.
+   We describe the use of multiple black hole pucture-type initial data
+   for evolution using the generalized harmonic formulation of the
+   Einstein equations.
 \end{abstract}
 %=============================================================================
 \maketitle
 %=============================================================================
-\ssec{Introduction}%
+\ssec{The code}%
 We use units with $G=c=1$, with $-+++$ metric signature, and
 $R^{\mu}{}_{\alpha\nu\beta}=\partial_{\nu}\Gamma^{\mu}_{\alpha\beta}-\cdots$.
 Lower-case Greek letters label spacetime indices, while lower-case
 Latin letter label spatial indices.
+
+Much of the necessary physics background is covered in the Appendices.
+
+This code is an extension of the \
+%=============================================================================
+\appendix
 %=============================================================================
 \ssec{Puncture initial data}%
+Nontrivial puncture data for multiple black hole spacetimes was first
+introduced by Bowen and York\cite{Bowen:1980yu}, and was later
+improved for numerical implementation by
+Brandt and Bruegmann\cite{Brandt:1997tf}.
+We briefly review the construction here.
+
 We consider vacuum General Relativity (GR). The Hamiltonian and
 momentum constraints are
 \begin{subequations}
@@ -119,7 +122,7 @@ momentum constraints are
    =&
    0
    ,\\
-   \nabla_D\left(K^{ij}-\gamma^{ij}K\right)
+   D_j\left(K^{ij}-\gamma^{ij}K\right)
    =&
    0
    ,
@@ -294,8 +297,6 @@ That is, we can specify the time derivatives of the lapse and shift
 by picking the initial gauge source terms $H^0$ and $H^i$.
 
 %=============================================================================
-\appendix
-%=============================================================================
 \section{$1+3$ spacetime slicing and $ADM$ variables}
 \label{sec:eom_lapse_shift}
    We foliate our spacetime with spacelike hypersurfaces
@@ -457,7 +458,9 @@ Once we have specified $H^{\alpha}$, we have picked a gauge.
    0
    ,
 \end{align}
-   where $E^{\alpha\beta}$ are the EOM derived from varying the metric,
+   where $E^{\alpha\beta}$ are the EOM derived from varying the metric
+(e.g. for the Einstein equations we'd have 
+$E^{\alpha\beta}=R^{\alpha\beta}-\frac{1}{2}g_{\alpha\beta}R$),
 $n^{\alpha}$ is the unit time-like vector orthogonal to the spatial foliation
 for our spacetime, and
 \begin{align}
@@ -472,11 +475,10 @@ for our spacetime, and
    .
 \end{align}
    We have included constraint damping with the
-constants $\kappa$ and $\rho$ \cite{Gundlach:2005eh}\footnote{Note
-that we need $\kappa<0$ to damp out the constraints.}.
-
-   As most gauge conditions are specified in terms of the lapse and shift,
-first we rewrite Eq.~\eqref{eq:gh_condition} in terms of those variables:
+constants $\kappa$ and $\rho$ \cite{Gundlach:2005eh}
+(Note that we need $\kappa<0$ to damp out the constraints).
+As most gauge conditions are specified in terms of the lapse and shift,
+we rewrite Eq.~\eqref{eq:gh_condition} in terms of those variables:
 \begin{subequations}
 \label{eq:GH_evo_lapse_shift}
 \begin{align}
@@ -506,19 +508,9 @@ first we rewrite Eq.~\eqref{eq:gh_condition} in terms of those variables:
 \end{subequations}
    For the second relation we used the the component $\gamma=0$ relation
 to eliminate the time derivative of the lapse.
-
-   In the GH formulation, picking a gauge means picking
-a choice of $H^0$ and $H^i$.
-The GH condition allows us to specify $\partial_t\alpha$
-and $\partial_t\beta^i$, although we don't usually
-directly solve Eq.~\eqref{eq:GH_evo_lapse_shift} for the lapse
-and shift in the GH formulation.
-Instead we just solve the full tensor equations, Eq.~\ref{eq:GH_tensor_eom},
-with the source terms replacing $\Gamma^{\alpha}$,
-Imposing suitable choices of the source functions 
-effectively leads to the evolution of
-the form Eq.~\eqref{eq:GH_evo_lapse_shift} for the lapse and shift
-(at least in the continuum limit).
+In the GH formulation, picking a gauge means picking
+a choice of $H^0$ and $H^i$, which we see allows us to specify
+$\partial_t\alpha$ and $\partial_t\beta^i$.
 %=============================================================================
 \bibliography{thebib}
 %=============================================================================
