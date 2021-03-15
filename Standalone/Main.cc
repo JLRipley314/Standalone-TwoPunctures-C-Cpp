@@ -29,7 +29,12 @@ int main() {
 	tp.par_S_minus[1]    =  0.0;
 	tp.par_S_minus[2]    =  0.0;
 	
-	// smoothen out the infinities at punctures
+	// number of collocation points
+        tp.npoints_A   = 20;
+        tp.npoints_B   = 20;
+        tp.npoints_phi = 16; // must be a multiple of 4
+
+        // smoothen out the infinities at punctures
 	tp.TP_epsilon = 1e-6;
 
         // Solve the constraint equations
@@ -46,7 +51,7 @@ int main() {
         double ymin = -10.0, ymax = 10.0;
         double zmin = -10.0, zmax = 10.0;
 
-        int i[dim], points = 20;
+        int i[dim], points = 10;
 
 	int printIndices[] = { g11, K11, lapse, shift1, shift2, shift2, -1 };
 	printf("%s %s %s %s %s %s %s %s %s\n", "xcoord", "ycoord", "zcoord", "g11", "K11", "lapse", "shift1", "shift2", "shift3" );

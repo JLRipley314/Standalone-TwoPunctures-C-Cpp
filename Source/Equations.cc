@@ -21,6 +21,8 @@ using namespace Utilities;
 /* U.d23[ivar]  = U[ivar]_yz;*/
 /* U.d33[ivar]  = U[ivar]_zz;*/
 /*=========================================================================*/
+/* the Bowen-York (`BY') term [\tilde{A}_{ij}] * [\tilde{A}^{ij}] */
+/*=========================================================================*/
 double
 TwoPunctures::BY_KKofxyz (double x, double y, double z)
 {
@@ -48,8 +50,8 @@ TwoPunctures::BY_KKofxyz (double x, double y, double z)
     nm_Pm += n_minus[i] * par_P_minus[i];
   }
 
-  double np_Sp[3], nm_Sm[3];
   /* cross product: np_Sp[i] = [(n_+) x (S_+)]_i; nm_Sm[i] = [(n_-) x (S_-)]_i*/
+  double np_Sp[3], nm_Sm[3];
   np_Sp[0] = n_plus[1] * par_S_plus[2] - n_plus[2] * par_S_plus[1];
   np_Sp[1] = n_plus[2] * par_S_plus[0] - n_plus[0] * par_S_plus[2];
   np_Sp[2] = n_plus[0] * par_S_plus[1] - n_plus[1] * par_S_plus[0];
@@ -163,6 +165,15 @@ TwoPunctures::BY_Aijofxyz (double x, double y, double z, double Aij[3][3])
 }
 /*============================================================================*/
 /* Nonlinear Equations */
+// The system of (nvar) elliptic equations to be solved (i=0..nvar-1):
+//    F_i(U[0],..,U[nvar-1] ; U_x[0],..U_x[nvar-1] ; .. ; U_zz[0]..U_zz[nvar-1]) = 0 
+// must be entered in cartesian coordinates in the form
+//   values[i] = F_i(U[0],..,U[nvar-1] ; U_x[0],..U_x[nvar-1] ; .. ; U_zz[0]..U_zz[nvar-1])
+// Example: Poisson equation (U_xx + U_yy + U_zz = Source) for two variables:
+//    values[0] = U.d11[0] + U.d22[0] + U.d33[0] - Source[0]
+//    values[1] = U.d11[1] + U.d22[1] + U.d33[1] - Source[1]
+
+// Example: Hamiltonian constraint for two Punctures with Bowen-York Curvature
 /*============================================================================*/
 void
 TwoPunctures::NonLinEquations (double rho_adm,
@@ -191,6 +202,15 @@ TwoPunctures::NonLinEquations (double rho_adm,
 }
 /*============================================================================*/
 /* Linear Equations */
+// The Jacobian of the system of (nvar) elliptic equations to be solved (i=0..nvar-1):
+//    F_i(U[0],..,U[nvar-1] ; U_x[0],..U_x[nvar-1] ; .. ; U_zz[0]..U_zz[nvar-1]) = 0 
+// must be entered in cartesian coordinates in the form
+//   values[i] = (dF_i/dU[0])*dU.d0[0] + .. +(dF_i/dU_zz[nvar-1])*dU.d33[nvar-1]
+// Example: Poisson equation (U_xx + U_yy + U_zz = Source) for two variables:
+//    values[0] = dU.d11[0] + dU.d22[0] + dU.d33[0]
+//    values[1] = dU.d11[1] + dU.d22[1] + dU.d33[1]
+
+// Example: Hamiltonian constraint for two Punctures with Bowen-York Curvature
 /*============================================================================*/
 void
 TwoPunctures::LinEquations (double A, double B, double X, double R,

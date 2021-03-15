@@ -6,4 +6,4 @@
 
 export OMP_NUM_THREADS=2
 
-./twopunctures | tee fieldvalues.asc
+./twopunctures > fieldvalues_res1.asc

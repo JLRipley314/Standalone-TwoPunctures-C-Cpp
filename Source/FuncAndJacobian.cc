@@ -17,12 +17,12 @@ using namespace Utilities;
 /*#define FAC sin(al)*sin(be)*sin(al)*sin(be)*/
 /*#define FAC 1*/
 
-static inline double min (double const x, double const y)
+static inline double min(double const x, double const y)
 {
   return x<y ? x : y;
 }
 
-/* --------------------------------------------------------------------------*/
+/*============================================================================*/
 int
 TwoPunctures::Index (int ivar, int i, int j, int k, int nvar, int n1, int n2, int n3)
 {
@@ -84,26 +84,23 @@ TwoPunctures::free_derivs (derivs * v, int n)
 void
 TwoPunctures::Derivatives_AB3 (int nvar, int n1, int n2, int n3, derivs v)
 {
-  int i, j, k, ivar, N, *indx;
-  double *p, *dp, *d2p, *q, *dq, *r, *dr;
+  int N = maximum3 (n1, n2, n3);
+  double *p   = dvector (0, N);
+  double *dp  = dvector (0, N);
+  double *d2p = dvector (0, N);
+  double *q   = dvector (0, N);
+  double *dq  = dvector (0, N);
+  double *r   = dvector (0, N);
+  double *dr  = dvector (0, N);
+  int *indx   = ivector (0, N);
 
-  N = maximum3 (n1, n2, n3);
-  p = dvector (0, N);
-  dp = dvector (0, N);
-  d2p = dvector (0, N);
-  q = dvector (0, N);
-  dq = dvector (0, N);
-  r = dvector (0, N);
-  dr = dvector (0, N);
-  indx = ivector (0, N);
-
-  for (ivar = 0; ivar < nvar; ivar++)
+  for (int ivar = 0; ivar < nvar; ivar++)
   {
-    for (k = 0; k < n3; k++)
+    for (int k = 0; k < n3; k++)
     {				/* Calculation of Derivatives w.r.t. A-Dir. */
-      for (j = 0; j < n2; j++)
+      for (int j = 0; j < n2; j++)
       {				/* (Chebyshev_Zeros)*/
-	for (i = 0; i < n1; i++)
+	for (int i = 0; i < n1; i++)
 	{
 	  indx[i] = Index (ivar, i, j, k, nvar, n1, n2, n3);
 	  p[i] = v.d0[indx[i]];
@@ -113,18 +110,18 @@ TwoPunctures::Derivatives_AB3 (int nvar, int n1, int n2, int n3, derivs v)
 	chder (dp, d2p, n1);
 	chebft_Zeros (dp, n1, 1);
 	chebft_Zeros (d2p, n1, 1);
-	for (i = 0; i < n1; i++)
+	for (int i = 0; i < n1; i++)
 	{
 	  v.d1[indx[i]] = dp[i];
 	  v.d11[indx[i]] = d2p[i];
 	}
       }
     }
-    for (k = 0; k < n3; k++)
+    for (int k = 0; k < n3; k++)
     {				/* Calculation of Derivatives w.r.t. B-Dir. */
-      for (i = 0; i < n1; i++)
+      for (int i = 0; i < n1; i++)
       {				/* (Chebyshev_Zeros)*/
-	for (j = 0; j < n2; j++)
+	for (int j = 0; j < n2; j++)
 	{
 	  indx[j] = Index (ivar, i, j, k, nvar, n1, n2, n3);
 	  p[j] = v.d0[indx[j]];
@@ -138,7 +135,7 @@ TwoPunctures::Derivatives_AB3 (int nvar, int n1, int n2, int n3, derivs v)
 	chebft_Zeros (dp, n2, 1);
 	chebft_Zeros (d2p, n2, 1);
 	chebft_Zeros (dq, n2, 1);
-	for (j = 0; j < n2; j++)
+	for (int j = 0; j < n2; j++)
 	{
 	  v.d2[indx[j]] = dp[j];
 	  v.d22[indx[j]] = d2p[j];
@@ -146,11 +143,11 @@ TwoPunctures::Derivatives_AB3 (int nvar, int n1, int n2, int n3, derivs v)
 	}
       }
     }
-    for (i = 0; i < n1; i++)
+    for (int i = 0; i < n1; i++)
     {				/* Calculation of Derivatives w.r.t. phi-Dir. (Fourier)*/
-      for (j = 0; j < n2; j++)
+      for (int j = 0; j < n2; j++)
       {
-	for (k = 0; k < n3; k++)
+	for (int k = 0; k < n3; k++)
 	{
 	  indx[k] = Index (ivar, i, j, k, nvar, n1, n2, n3);
 	  p[k] = v.d0[indx[k]];
@@ -168,7 +165,7 @@ TwoPunctures::Derivatives_AB3 (int nvar, int n1, int n2, int n3, derivs v)
 	fourft (r, n3, 0);
 	fourder (r, dr, n3);
 	fourft (dr, n3, 1);
-	for (k = 0; k < n3; k++)
+	for (int k = 0; k < n3; k++)
 	{
 	  v.d3[indx[k]] = dp[k];
 	  v.d33[indx[k]] = d2p[k];
@@ -230,16 +227,16 @@ TwoPunctures::F_of_v (int nvar, int n1, int n2, int n3, derivs v, double *F,
           for (ivar = 0; ivar < nvar; ivar++)
           {
             indx = Index (ivar, i, j, k, nvar, n1, n2, n3);
-            U.d0[ivar] = Am1 * v.d0[indx];        /* U*/
-            U.d1[ivar] = v.d0[indx] + Am1 * v.d1[indx];        /* U_A*/
-            U.d2[ivar] = Am1 * v.d2[indx];        /* U_B*/
-            U.d3[ivar] = Am1 * v.d3[indx];        /* U_3*/
-            U.d11[ivar] = 2 * v.d1[indx] + Am1 * v.d11[indx];        /* U_AA*/
-            U.d12[ivar] = v.d2[indx] + Am1 * v.d12[indx];        /* U_AB*/
-            U.d13[ivar] = v.d3[indx] + Am1 * v.d13[indx];        /* U_AB*/
-            U.d22[ivar] = Am1 * v.d22[indx];        /* U_BB*/
-            U.d23[ivar] = Am1 * v.d23[indx];        /* U_B3*/
-            U.d33[ivar] = Am1 * v.d33[indx];        /* U_33*/
+            U.d0[ivar] = Am1 * v.d0[indx];                    /* U*/
+            U.d1[ivar] = v.d0[indx] + Am1 * v.d1[indx];       /* U_A*/
+            U.d2[ivar] = Am1 * v.d2[indx];                    /* U_B*/
+            U.d3[ivar] = Am1 * v.d3[indx];                    /* U_3*/
+            U.d11[ivar] = 2 * v.d1[indx] + Am1 * v.d11[indx]; /* U_AA*/
+            U.d12[ivar] = v.d2[indx] + Am1 * v.d12[indx];     /* U_AB*/
+            U.d13[ivar] = v.d3[indx] + Am1 * v.d13[indx];     /* U_AB*/
+            U.d22[ivar] = Am1 * v.d22[indx];                  /* U_BB*/
+            U.d23[ivar] = Am1 * v.d23[indx];                  /* U_B3*/
+            U.d33[ivar] = Am1 * v.d33[indx];                  /* U_33*/
           }
           /* Calculation of (X,R) and*/
           /* (U_X, U_R, U_3, U_XX, U_XR, U_X3, U_RR, U_R3, U_33)*/
@@ -251,8 +248,6 @@ TwoPunctures::F_of_v (int nvar, int n1, int n2, int n3, derivs v, double *F,
           /* (U, U_x, U_y, U_z, U_xx, U_xy, U_xz, U_yy, U_yz, U_zz)*/
           rx3_To_xyz (nvar, s_x[i3D], r, phi, &(s_y[i3D]), &(s_z[i3D]), U);
         }
-    // @TODO: Set_Rho_ADM is an external call to another Cactuss thorn or so.
-    /* Set_Rho_ADM(cctkGH, n1*n2*n3, sources, s_x, s_y, s_z); */ // COMMENTED AS WE DO NOT HAVE CCTK HERE
     free(s_z);
     free(s_y);
     free(s_x);
@@ -288,16 +283,16 @@ TwoPunctures::F_of_v (int nvar, int n1, int n2, int n3, derivs v, double *F,
         for (ivar = 0; ivar < nvar; ivar++)
         {
           indx = Index (ivar, i, j, k, nvar, n1, n2, n3);
-          U.d0[ivar] = Am1 * v.d0[indx];        /* U*/
-          U.d1[ivar] = v.d0[indx] + Am1 * v.d1[indx];        /* U_A*/
-          U.d2[ivar] = Am1 * v.d2[indx];        /* U_B*/
-          U.d3[ivar] = Am1 * v.d3[indx];        /* U_3*/
-          U.d11[ivar] = 2 * v.d1[indx] + Am1 * v.d11[indx];        /* U_AA*/
-          U.d12[ivar] = v.d2[indx] + Am1 * v.d12[indx];        /* U_AB*/
-          U.d13[ivar] = v.d3[indx] + Am1 * v.d13[indx];        /* U_AB*/
-          U.d22[ivar] = Am1 * v.d22[indx];        /* U_BB*/
-          U.d23[ivar] = Am1 * v.d23[indx];        /* U_B3*/
-          U.d33[ivar] = Am1 * v.d33[indx];        /* U_33*/
+          U.d0[ivar] = Am1 * v.d0[indx];                    /* U*/
+          U.d1[ivar] = v.d0[indx] + Am1 * v.d1[indx];       /* U_A*/
+          U.d2[ivar] = Am1 * v.d2[indx];                    /* U_B*/
+          U.d3[ivar] = Am1 * v.d3[indx];                    /* U_3*/
+          U.d11[ivar] = 2 * v.d1[indx] + Am1 * v.d11[indx]; /* U_AA*/
+          U.d12[ivar] = v.d2[indx] + Am1 * v.d12[indx];     /* U_AB*/
+          U.d13[ivar] = v.d3[indx] + Am1 * v.d13[indx];     /* U_AB*/
+          U.d22[ivar] = Am1 * v.d22[indx];                  /* U_BB*/
+          U.d23[ivar] = Am1 * v.d23[indx];                  /* U_B3*/
+          U.d33[ivar] = Am1 * v.d33[indx];                  /* U_33*/
         }
         /* Calculation of (X,R) and*/
         /* (U_X, U_R, U_3, U_XX, U_XR, U_X3, U_RR, U_R3, U_33)*/
@@ -721,15 +716,22 @@ TwoPunctures::PunctEvalAtArbitPosition (double *v, int ivar, double A, double B,
 
   return result;
 }
-
-/* --------------------------------------------------------------------------*/
+/*===========================================================================*/
 void
-TwoPunctures::calculate_derivs (int i, int j, int k, int ivar, int nvar, int n1, int n2,
-		  int n3, derivs v, derivs vv)
+TwoPunctures::calculate_derivs (
+      int i, int j, int k, 
+      int ivar, int nvar, 
+      int n1, int n2, int n3, 
+      derivs v, derivs vv)
 {
-  double al = Pih * (2 * i + 1) / n1, be = Pih * (2 * j + 1) / n2,
-    sin_al = sin (al), sin2_al = sin_al * sin_al, cos_al = cos (al),
-    sin_be = sin (be), sin2_be = sin_be * sin_be, cos_be = cos (be);
+  double al = Pih * (2 * i + 1) / n1, 
+         be = Pih * (2 * j + 1) / n2,
+         sin_al  = sin (al), 
+         sin_be  = sin (be), 
+         sin2_al = sin_al * sin_al, 
+         sin2_be = sin_be * sin_be, 
+         cos_al = cos (al),
+         cos_be = cos (be);
 
   vv.d0[0] = v.d0[Index (ivar, i, j, k, nvar, n1, n2, n3)];
   vv.d1[0] = v.d1[Index (ivar, i, j, k, nvar, n1, n2, n3)] * sin_al;
@@ -745,8 +747,7 @@ TwoPunctures::calculate_derivs (int i, int j, int k, int ivar, int nvar, int n1,
   vv.d23[0] = v.d23[Index (ivar, i, j, k, nvar, n1, n2, n3)] * sin_be;
   vv.d33[0] = v.d33[Index (ivar, i, j, k, nvar, n1, n2, n3)];
 }
-
-/* --------------------------------------------------------------------------*/
+/*===========================================================================*/
 double
 TwoPunctures::interpol (double a, double b, double c, derivs v)
 {
@@ -755,9 +756,9 @@ TwoPunctures::interpol (double a, double b, double c, derivs v)
     + 0.5 * a * a * v.d11[0] + a * b * v.d12[0] + a * c * v.d13[0]
     + 0.5 * b * b * v.d22[0] + b * c * v.d23[0] + 0.5 * c * c * v.d33[0];
 }
-
-/* --------------------------------------------------------------------------*/
+/*===========================================================================*/
 /* Calculates the value of v at an arbitrary position (x,y,z)*/
+/*===========================================================================*/
 double
 TwoPunctures::PunctTaylorExpandAtArbitPosition (int ivar, int nvar, int n1,
                                   int n2, int n3, derivs v, double x, double y,
@@ -806,9 +807,9 @@ TwoPunctures::PunctTaylorExpandAtArbitPosition (int ivar, int nvar, int n1,
 
   return Ui;
 }
-
-/* --------------------------------------------------------------------------*/
+/*===========================================================================*/
 /* Calculates the value of v at an arbitrary position (x,y,z)*/
+/*===========================================================================*/
 double
 TwoPunctures::PunctIntPolAtArbitPosition (int ivar, int nvar, int n1,
 			    int n2, int n3, derivs v, double x, double y,
@@ -841,13 +842,9 @@ TwoPunctures::PunctIntPolAtArbitPosition (int ivar, int nvar, int n1,
 
   return Ui;
 }
-
-
-//////////////////////////////////////////////////////
-/// Fast Spectral Interpolation Routine Stuff
-//////////////////////////////////////////////////////
-
-
+/*===========================================================================*/
+/* Fast Spectral Interpolation Routine Stuff */
+/*===========================================================================*/
 /* Calculates the value of v at an arbitrary position (A,B,phi)* using the fast routine */
 double 
 TwoPunctures::PunctEvalAtArbitPositionFast (double *v, int ivar, double A, double B, double phi, int nvar, int n1, int n2, int n3)
@@ -887,14 +884,11 @@ TwoPunctures::PunctEvalAtArbitPositionFast (double *v, int ivar, double A, doubl
   free_dmatrix (values2, 0, N, 0, N);
 
   return result;
-  //  */
-  //  return 0.;
 }
-
-
-// --------------------------------------------------------------------------*/
-// Calculates the value of v at an arbitrary position (x,y,z) if the spectral coefficients are known //
-/* --------------------------------------------------------------------------*/
+/*===========================================================================*/
+/* Calculates the value of v at an arbitrary position (x,y,z) 
+ * if the spectral coefficients are known */
+/*===========================================================================*/
 double
 TwoPunctures::PunctIntPolAtArbitPositionFast (int ivar, int nvar, int n1,
 			    int n2, int n3, derivs v, double x, double y,

@@ -11,7 +11,7 @@
 namespace TP {
 using namespace Utilities;
 using namespace Z4VectorShortcuts;
-
+/*===========================================================================*/
 void
 TwoPunctures::set_initial_guess(derivs v)
 {
@@ -187,7 +187,6 @@ TwoPunctures::Run ()
   int imin[3], imax[3];
   int const ntotal = n1 * n2 * n3 * nvar;
   static double *F = NULL;
-  double admMass;
 
   if (! F) {
     double up, um;
@@ -305,8 +304,11 @@ TwoPunctures::Run ()
     TP_INFO ( "Puncture 2 ADM mass is %g", mm_adm);
 
     /* print out ADM mass, eq.: \Delta M_ADM=2*r*u=4*b*V for A=1,B=0,phi=0 */
-    admMass = (mp + mm
-               - 4*par_b*PunctEvalAtArbitPosition(v.d0, 0, 1, 0, 0, nvar, n1, n2, n3));
+    double admMass = (
+         mp 
+      +  mm
+      -  4*par_b*PunctEvalAtArbitPosition(v.d0, 0, 1, 0, 0, nvar, n1, n2, n3)
+      );
     TP_INFO ( "The total ADM mass is %g", admMass);
 
     /* ------------------------------------------------------------------------
@@ -350,8 +352,8 @@ TwoPunctures::Run ()
   if(initial_lapse == "twopunctures")
     TP_WARN("Please specify a lapse which we can use");
   antisymmetric_lapse = (initial_lapse == "twopunctures-antisymmetric");
-  averaged_lapse = (initial_lapse == "twopunctures-averaged");
-	pmn_lapse = (initial_lapse == "psi^n");
+  averaged_lapse      = (initial_lapse == "twopunctures-averaged");
+  pmn_lapse           = (initial_lapse == "psi^n");
   if (pmn_lapse)
     TP_INFO ("Setting initial lapse to psi^%f profile.",
              initial_lapse_psi_exponent);
