@@ -12,11 +12,12 @@ OMP=-fopenmp
 # together without this intermediate step.
 TP_INC=  ../Source
 TP_LINK= ../Source/libtwopunctures.a
+CPP_LINK= -lstdc++ ## need c++ std lib at linking
 
 thebinary:
 	make -C ${TP_INC}
 	${CC} -c ${DEBUG} ${OMP} ${OPTIMIZE} -I${TP_INC} Main.c
-	${LD} ${OMP} -o ${binary} Main.o ${TP_LINK} ${LINKGSL} -lstdc++ ## need c++ std lib at linking
+	${LD} ${OMP} -o ${binary} Main.o ${TP_LINK} ${LINKGSL} $(CPP_LINK)
 
 clean:
 	rm -f *.o ${binary}
