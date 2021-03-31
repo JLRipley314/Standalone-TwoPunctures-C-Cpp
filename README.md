@@ -8,10 +8,15 @@ which in turn was adapted from the
 [TwoPunctures thorn](https://bitbucket.org/einsteintoolkit/einsteininitialdata),
 which is part of the [Einstein toolkit](https://einsteintoolkit.org/). 
 The standalone code this code is based on also
-incorporated some speedups of the spectral interpolation methods, which are described in
+incorporated some speedups of the spectral interpolation methods,
+which are described in
 "An efficient spectral interpolation routine for the TwoPunctures code"
 *Vasileios Paschalidis, Zachariah B. Etienne, Roman Gold, Stuart L. Shapiro*,
 [arXiv:1304.0457](https://arxiv.org/abs/1304.0457)).
+
+The standalone TwoPunctures code added some C++ functionality,
+which limits the interoperability of the library with legacy software
+(namely, nr-mgh). We've added a C-api in the Source file ``TwoPunctures_c_api.h". 
 
 ## Physics
 

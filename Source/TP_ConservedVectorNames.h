@@ -80,45 +80,6 @@ const int K0 = 53;
 // total length of conserved vector
 const int Qlen = 53;
 
-/************************** Syntactic sugar (example from SRHD) ********************************/
-/************************** Just for placing it somewhere, currently not used ******************/
-
-// Method 1: C++ namespaced constants, as present here.
-
-// Method 2:
-// Labels for indices into Q and V, used only in the local scope. However, the C++ namespace
-// allows the same just with a cleaner notation.
-///  #define DEFINE_LABELS \
-///  	const int rho = 0; \
-///  	const int vx = 1; \
-///  	const int vy = 2; \
-///  	const int vz = 3; \
-///  	const int p = 4
-/* Usage:
-     function foo(double* Q, double* V) {
-        DEFINE_LABELS;
-        Q[rho] = V[p];
-     }
-   You can archieve the same when writing
-     function foo(double* Q, double* V) {
-        using namespace TP::Z4VectorShortcuts;
-        Q[rho] = V[p];
-     }
-*/
-
-	
-// direct references deep into X  (might be named V, Q, S, whatever)
-// Pro: More natural, shorter names for fields
-// Contra: Can only be used for one state vector in a scope.
-//         Will produce a lot of warnings when -Wunused-but-set-variable warnings is active
-///  #define SHORTHANDS(X)   double &rho=X[0], &vx=X[1], &vy=X[2], &vz=X[3], &p=X[4]
-/* Usage:
-   function foo(double* Q) {
-      SHORTHANDS(Q);
-      rho = p*p + vx;
-   }
-*/
-
 } // namespace Z4VectorShortcuts
 } // namespace TP
 #endif /* __TP_CONSERVED_VECTOR_NAMES__ */
