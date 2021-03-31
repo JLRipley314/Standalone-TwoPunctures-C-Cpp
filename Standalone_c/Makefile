@@ -1,5 +1,5 @@
 CC=gcc
-LD=g++
+LD=gcc
 LINKGSL=-lgsl -lgslcblas -lm
 #DEBUG=-g
 OPTIMIZE=-O2
@@ -16,7 +16,7 @@ TP_LINK= ../Source/libtwopunctures.a
 thebinary:
 	make -C ${TP_INC}
 	${CC} -c ${DEBUG} ${OMP} ${OPTIMIZE} -I${TP_INC} Main.c
-	${LD} ${OMP} -o ${binary} Main.o ${TP_LINK} ${LINKGSL}
+	${LD} ${OMP} -o ${binary} Main.o ${TP_LINK} ${LINKGSL} -lstdc++ ## need c++ std lib at linking
 
 clean:
 	rm -f *.o ${binary}
