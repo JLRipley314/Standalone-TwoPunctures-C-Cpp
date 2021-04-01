@@ -10,8 +10,11 @@
 #define EXTERNC
 #endif
 
+/*===========================================================================*/
 /* An opaque type for the TwoPunctures class */
 typedef void* TP_t;
+/*===========================================================================*/
+/* Member functions of TwoPunctures class */
 
 EXTERNC TP_t twopunctures_init(
       const int par_b,
@@ -95,7 +98,7 @@ EXTERNC int TP_D323();
 EXTERNC int TP_D333(); 
 EXTERNC int TP_K0(); 
 
-// total length of conserved vector
+/* total length of conserved vector */
 EXTERNC int TP_Qlen();
 
 /*===========================================================================*/

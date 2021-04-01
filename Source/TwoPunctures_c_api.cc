@@ -2,8 +2,6 @@
 #include "TwoPunctures_c_api.h"
 
 using namespace TP;
-using namespace TP::Z4VectorShortcuts;
-
 /*=========================================================================*/
 TP_t twopunctures_init(
       const int par_b,
@@ -78,6 +76,8 @@ void twopunctures_interpolate(TP_t self, const double *pos, double *Q)
    typed_self->Interpolate(pos, Q);
 }
 /*=========================================================================*/
+using namespace TP::Z4VectorShortcuts;
+
 int TP_g11() {return g11;} 
 int TP_g12() {return g12;} 
 int TP_g13() {return g13;}
@@ -101,8 +101,8 @@ int TP_shift3() {return shift3;}
 int TP_b1() {return b1;}
 int TP_b2() {return b2;}
 int TP_b3() {return b3;}
-int TP_A1() {return Z1;}
-int TP_A2() {return Z2;}
+int TP_A1() {return A1;}
+int TP_A2() {return A2;}
 int TP_A3() {return A3;}
 int TP_B11() {return B11;}
 int TP_B21() {return B21;}
