@@ -1,4 +1,4 @@
-# The TwoPunctures Standalone code, adapted for (modified) generalized harmonic evolution
+# The TwoPunctures Standalone code, adapted for C/C++ 
 
 ## Lineage
 
@@ -16,7 +16,8 @@ which are described in
 
 The standalone TwoPunctures code added some C++ functionality,
 which limits the interoperability of the library with legacy software
-(namely, nr-mgh). We've added a C-api in the Source file ``TwoPunctures_c_api.h". 
+numerical relativit software.
+I've added a C-api in the Source files: `TwoPunctures_c_api.h` and `TwoPunctures_c_api.cc`.
 
 ## Physics
 
@@ -29,7 +30,11 @@ The method used is described in *Marcus Ansorg, Bernd Brügmann, Wolfgang Tichy*
 The main changes we have added is features to compute the full metric and first derivatives of it
 (see the Documentation).
 
-TODO: add features to compute modified gravity equations.
+## TODO
+
+* Add features to compute modified gravity equations
+* Add time derivatives of lapse and shift as functions of generalized harmonic
+source terms. 
 
 ## License
 
@@ -38,4 +43,5 @@ Adaptions to make the standalone code were made by Federico Guercilena, Sven Kö
 and incorporated code written by 
 Vasileios Paschalidis, Zachariah B. Etienne, Roman Gold, and Stuart L. Shapiro.
 
-This code is licensed under the LGPLv2.1 license. Please see the LICENSE file for details.
+This code is licensed under the same LGPLv2.1 license as the original
+TwoPunctures code; see the LICENSE file for details.
