@@ -4,6 +4,7 @@
 using namespace TP;
 /*=========================================================================*/
 TP_t twopunctures_init(
+      const int lapse_kind,
       const int par_b,
       const int npoints_A,
       const int npoints_B,
@@ -28,6 +29,23 @@ TP_t twopunctures_init(
    TP_t tp = new TwoPunctures;
 
    TwoPunctures *typed_tp = static_cast<TwoPunctures*>(tp);
+
+   if (lapse_kind==0) {
+      typed_tp->initial_lapse = "twopunctures-averaged";
+   } else 
+   if (lapse_kind==1) {
+      typed_tp->initial_lapse = "twopunctures-antisymmetric";
+   } else
+   if (lapse_kind==2) {
+      typed_tp->initial_lapse = "twopunctures-averaged";
+   } else
+   if (lapse_kind==3) {
+      typed_tp->initial_lapse = "psi^n";
+   } else {
+      /* use default: 
+       * see TP_Parameters.cc 
+       */
+   }
 
    typed_tp->par_b = par_b;
 
