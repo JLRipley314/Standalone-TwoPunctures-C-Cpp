@@ -3,12 +3,12 @@
 
 using namespace TP;
 /*=========================================================================*/
-TP_t twopunctures_init(
-      const int par_b,
+EXTERNC TP_t twopunctures_init(
       const int npoints_A,
       const int npoints_B,
       const int npoints_phi,
       const double epsilon,
+      const double offset_plus,
       const double target_M_plus,
       const double par_P_plus_x,
       const double par_P_plus_y,
@@ -16,6 +16,7 @@ TP_t twopunctures_init(
       const double par_S_plus_x,
       const double par_S_plus_y,
       const double par_S_plus_z,
+      const double offset_minus,
       const double target_M_minus,
       const double par_P_minus_x,
       const double par_P_minus_y,
@@ -29,7 +30,12 @@ TP_t twopunctures_init(
 
    TwoPunctures *typed_tp = static_cast<TwoPunctures*>(tp);
 
-   typed_tp->par_b = par_b;
+   /* 
+    * black hole positions: offset: distance from orign 
+    */
+   double center_offset_x = 0.5 * (offset_plus + offset_minus);
+   typed_tp->center_offset[0] = center_offset_x;
+   typed_tp->par_b = 0.5 * (offset_plus - offset_minus);
 
    typed_tp->target_M_plus = target_M_plus;
    typed_tp->par_P_plus[0] = par_P_plus_x;

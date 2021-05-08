@@ -9,8 +9,7 @@ int main() {
 
    // amend default parameters
    // this is a quick fix until we have a parfile parser
-   int par_b =  6;
-
+   double offset_plus =  3;
    double target_M_plus =  0.5;
    double par_P_plus_x =  0.2;
    double par_P_plus_y =  0.0;
@@ -19,6 +18,7 @@ int main() {
    double par_S_plus_y =  0.0;
    double par_S_plus_z =  0.0;
 
+   double offset_minus =  -3;
    double target_M_minus =  0.5;
    double par_P_minus_x = -0.2;
    double par_P_minus_y =  0.0;
@@ -34,13 +34,13 @@ int main() {
 
    // smoothen out the infinities at punctures
    double epsilon = 1e-6;
-	
+
    TP_t tp = twopunctures_init(
-         par_b,
          npoints_A,
          npoints_B,
          npoints_phi,
          epsilon,
+         offset_plus,
          target_M_plus,
          par_P_plus_x,
          par_P_plus_y,
@@ -48,6 +48,7 @@ int main() {
          par_S_plus_x,
          par_S_plus_y,
          par_S_plus_z,
+         offset_minus,
          target_M_minus,
          par_P_minus_x,
          par_P_minus_y,

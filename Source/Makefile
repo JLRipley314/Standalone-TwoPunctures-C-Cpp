@@ -1,5 +1,5 @@
-CC=icpc#g++
-LD=icpc#g++
+CC=g++#icpc#
+LD=g++#icpc#
 LINKGSL=-lgsl -lgslcblas -lm
 #DEBUG=-g
 OPTIMIZE=-O2

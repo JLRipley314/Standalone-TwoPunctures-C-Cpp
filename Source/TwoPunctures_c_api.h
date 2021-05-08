@@ -17,11 +17,11 @@ typedef void* TP_t;
 /* Member functions of TwoPunctures class */
 
 EXTERNC TP_t twopunctures_init(
-      const int par_b,
       const int npoints_A,
       const int npoints_B,
       const int npoints_phi,
       const double epsilon,
+      const double offset_plus,
       const double target_M_plus,
       const double par_P_plus_x,
       const double par_P_plus_y,
@@ -29,6 +29,7 @@ EXTERNC TP_t twopunctures_init(
       const double par_S_plus_x,
       const double par_S_plus_y,
       const double par_S_plus_z,
+      const double offset_minus,
       const double target_M_minus,
       const double par_P_minus_x,
       const double par_P_minus_y,
