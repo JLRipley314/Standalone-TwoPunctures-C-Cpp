@@ -7,6 +7,8 @@ int main() {
 
    fprintf(stderr, "Reading parameters...\n\n");
 
+
+   const int lapse_kind = 1;
    // amend default parameters
    // this is a quick fix until we have a parfile parser
    double offset_plus =  3;
@@ -36,6 +38,7 @@ int main() {
    double epsilon = 1e-6;
 
    TP_t tp = twopunctures_init(
+         lapse_kind,
          npoints_A,
          npoints_B,
          npoints_phi,
@@ -106,7 +109,8 @@ int main() {
             twopunctures_interpolate(tp,pos,Q);
 
             printf("%5e %5e %5e ", pos[0], pos[1], pos[2]);
-            for(int p=0;printIndices[p]>=0;p++) {
+            int p=0;
+            for(p=0;printIndices[p]>=0;p++) {
                printf("%5e ", Q[printIndices[p]]);
             }
             printf("\n");  

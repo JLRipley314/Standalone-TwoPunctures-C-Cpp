@@ -4,6 +4,7 @@
 using namespace TP;
 /*=========================================================================*/
 EXTERNC TP_t twopunctures_init(
+      const int lapse_kind,
       const int npoints_A,
       const int npoints_B,
       const int npoints_phi,
@@ -36,6 +37,23 @@ EXTERNC TP_t twopunctures_init(
    double center_offset_x = 0.5 * (offset_plus + offset_minus);
    typed_tp->center_offset[0] = center_offset_x;
    typed_tp->par_b = 0.5 * (offset_plus - offset_minus);
+
+   if (lapse_kind==0) {
+      typed_tp->initial_lapse = "twopunctures-averaged";
+   } else 
+   if (lapse_kind==1) {
+      typed_tp->initial_lapse = "twopunctures-antisymmetric";
+   } else
+   if (lapse_kind==2) {
+      typed_tp->initial_lapse = "twopunctures-averaged";
+   } else
+   if (lapse_kind==3) {
+      typed_tp->initial_lapse = "psi^n";
+   } else {
+      /* use default: 
+       * see TP_Parameters.cc 
+       */
+   }
 
    typed_tp->target_M_plus = target_M_plus;
    typed_tp->par_P_plus[0] = par_P_plus_x;

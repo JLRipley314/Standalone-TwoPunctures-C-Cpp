@@ -17,6 +17,7 @@ typedef void* TP_t;
 /* Member functions of TwoPunctures class */
 
 EXTERNC TP_t twopunctures_init(
+      const int lapse_kind,
       const int npoints_A,
       const int npoints_B,
       const int npoints_phi,

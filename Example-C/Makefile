@@ -1,5 +1,5 @@
-CC=gcc
-LD=gcc
+CC=icc#gcc
+LD=icc#gcc
 LINKGSL=-lgsl -lgslcblas -lm
 #DEBUG=-g
 OPTIMIZE=-O2
