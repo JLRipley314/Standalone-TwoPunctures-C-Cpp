@@ -9,8 +9,6 @@ int main() {
 	
 	TP::TwoPunctures tp;
 
-	// amend default parameters
-        // this is a quick fix until we have a parfile parser
 	tp.par_b             =  6;
 
 	tp.target_M_plus     =  0.5;
