@@ -33,7 +33,7 @@ The main changes we have added is features to compute the full metric and first 
 ## OpenMP and gh3d2m code 
 
 The default Makefile setting under `/Source` is to not compile with OpenMP.
-If you are using the `gh3d2m` code, I would recommend keeping this setting,
+If you are using the `gh3d2m` code, I would recommend NOT compiling with OpenMP,
 as it allows you to call TwoPunctures on each CPU core when using MPI with
 that code.
  
