@@ -21,14 +21,12 @@ I've added a C-api in the Source files: `TwoPunctures_c_api.h` and `TwoPunctures
 
 ## Physics
 
-The original twopunctures code created initial data for two puncture black holes using a single domain spectral method.
+The TwoPunctures code computes initial data for two puncture black holes using a single domain
+(pseudo)spectral method.
 The method used is described in *Marcus Ansorg, Bernd Brügmann, Wolfgang Tichy*,
 "A single-domain spectral method for black hole puncture data",
 [PRD 70, 064011 (2004)](https://arxiv.org/ct?url=http%3A%2F%2Fdx.doi.org%2F10%252E1103%2FPhysRevD%252E70%252E064011&v=e1b6f829),
 [arXiv:gr-qc/0404056](https://arxiv.org/abs/gr-qc/0404056).
-
-The main changes we have added is features to compute the full metric and first derivatives of it
-(see the Documentation).
 
 ## OpenMP and gh3d2m code 
 
