@@ -30,6 +30,13 @@ The method used is described in *Marcus Ansorg, Bernd Brügmann, Wolfgang Tichy*
 The main changes we have added is features to compute the full metric and first derivatives of it
 (see the Documentation).
 
+## Features/Bugs
+
+The default Makefile setting under `/Source` is to not compile with OpenMP.
+If you are using the `gh3d2m` code, I would recommend keeping this setting,
+as it allows you to call TwoPunctures on each CPU core when using MPI with
+that code.
+ 
 ## TODO
 
 * Add features to compute modified gravity equations

@@ -5,7 +5,7 @@ LINKGSL=-lgsl -lgslcblas -lm
 OPTIMIZE=-O2
 binary=twopunctures
 # enable parallelization
-OMP=-fopenmp
+OMP=#-fopenmp
 
 # This exemplary makefile shows how to include the twopunctures code
 # as a (static) library, but you can of course also compile everything

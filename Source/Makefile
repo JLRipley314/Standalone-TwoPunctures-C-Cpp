@@ -4,8 +4,8 @@ LINKGSL=-lgsl -lgslcblas -lm
 #DEBUG=-g
 OPTIMIZE=-O2
 library=libtwopunctures.a
-# enable parallelization
-OMP=-fopenmp
+# enable OpenMP parallelization
+OMP=#-fopenmp
 
 ${library}: all
 	ar rcs $@ *.o
