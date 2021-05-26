@@ -15,8 +15,8 @@ which are described in
 [arXiv:1304.0457](https://arxiv.org/abs/1304.0457)).
 
 The standalone TwoPunctures code added some C++ functionality,
-which limits the interoperability of the library with legacy software
-numerical relativit software.
+which limits the interoperability of the library with 
+legacy numerical relativity software.
 I've added a C-api in the Source files: `TwoPunctures_c_api.h` and `TwoPunctures_c_api.cc`.
 
 ## Physics
