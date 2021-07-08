@@ -45,12 +45,9 @@ EXTERNC TP_t twopunctures_init(
       typed_tp->initial_lapse = "twopunctures-antisymmetric";
    } else
    if (lapse_kind==2) {
-      typed_tp->initial_lapse = "twopunctures-averaged";
-   } else
-   if (lapse_kind==3) {
       typed_tp->initial_lapse = "psi^n";
    } else
-   if (lapse_kind==4) {
+   if (lapse_kind==3) {
       typed_tp->initial_lapse = "brownsville";
    } else {
       /* use default: 
