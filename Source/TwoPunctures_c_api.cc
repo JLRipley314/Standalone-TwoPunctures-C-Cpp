@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "TwoPunctures.h"
 #include "TwoPunctures_c_api.h"
 
@@ -70,6 +72,28 @@ EXTERNC TP_t twopunctures_init(
    typed_tp->par_S_minus[0] = par_S_minus_x;
    typed_tp->par_S_minus[1] = par_S_minus_y;
    typed_tp->par_S_minus[2] = par_S_minus_z;
+
+   printf("==================================================\n");
+   printf("TwoPunctures C API called\n");
+   printf("==================================================\n");
+   printf("lapse kind = %s\n", typed_tp->initial_lapse.c_str());
+   printf("--------------------------------------------------\n");
+   printf("target_M_plus = %f\n", typed_tp->target_M_plus);
+   printf("P_plus_x = %f\n", typed_tp->par_P_plus[0]);
+   printf("P_plus_y = %f\n", typed_tp->par_P_plus[1]);
+   printf("P_plus_z = %f\n", typed_tp->par_P_plus[2]);
+   printf("S_plus_x = %f\n", typed_tp->par_S_plus[0]);
+   printf("S_plus_y = %f\n", typed_tp->par_S_plus[1]);
+   printf("S_plus_z = %f\n", typed_tp->par_S_plus[2]);
+   printf("--------------------------------------------------\n");
+   printf("target_M_minus = %f\n", typed_tp->target_M_minus);
+   printf("P_minus_x = %f\n", typed_tp->par_P_minus[0]);
+   printf("P_minus_y = %f\n", typed_tp->par_P_minus[1]);
+   printf("P_minus_z = %f\n", typed_tp->par_P_minus[2]);
+   printf("S_minus_x = %f\n", typed_tp->par_S_minus[0]);
+   printf("S_minus_y = %f\n", typed_tp->par_S_minus[1]);
+   printf("S_minus_z = %f\n", typed_tp->par_S_minus[2]);
+   printf("==================================================\n");
 
    // number of collocation points
    typed_tp->npoints_A   = npoints_A;

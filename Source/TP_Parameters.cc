@@ -55,17 +55,5 @@ Parameters::Parameters() {
 	mm = 0;
 	mp_adm = 0;
 	mm_adm = 0;
-
-
-        TP_INFO ("The two black holes have target ADM masses of %f and %f",
-                target_M_minus, target_M_plus);
-        TP_INFO ("The corresponding linear momenta are:");
-        TP_INFO ("P_x1:%f\tP_x2:%f", par_P_minus[0], par_P_plus[0]);
-        TP_INFO ("P_y1:%f\tP_y2:%f", par_P_minus[1], par_P_plus[1]);
-        TP_INFO ("P_z1:%f\tP_z2:%f", par_P_minus[2], par_P_plus[2]);
-        TP_INFO ("The corresponding spins are:");
-        TP_INFO ("S_x1:%f\tS_x2:%f", par_S_minus[0], par_S_plus[0]);
-        TP_INFO ("S_y1:%f\tS_y2:%f", par_S_minus[1], par_S_plus[1]);
-        TP_INFO ("S_z1:%f\tS_z2:%f", par_S_minus[2], par_S_plus[2]);
 } // constructor
 } // namespace

@@ -11,7 +11,7 @@ int main() {
    const int lapse_kind = 1;
 
    double offset_plus =  3;     // Distance of `plus` hole from approximate center of mass along x-direction
-   double target_M_plus =  0.5; // Target mass of `plus` black hole
+   double target_M_plus =  0.1; // Target mass of `plus` black hole
    double par_P_plus_x =  0.2;  // x momentum component
    double par_P_plus_y =  0.0;
    double par_P_plus_z =  0.0;
@@ -20,7 +20,7 @@ int main() {
    double par_S_plus_z =  0.0;
 
    double offset_minus =  -3;
-   double target_M_minus =  0.5;
+   double target_M_minus =  0.1;
    double par_P_minus_x = -0.2;
    double par_P_minus_y =  0.0;
    double par_P_minus_z =  0.0;
