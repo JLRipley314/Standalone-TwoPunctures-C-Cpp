@@ -1,4 +1,4 @@
-# The TwoPunctures Standalone code, adapted for C/C++ 
+# The Standalone TwoPunctures code, adapted for use in C codes 
 
 ## Lineage
 
@@ -14,10 +14,11 @@ which are described in
 *Vasileios Paschalidis, Zachariah B. Etienne, Roman Gold, Stuart L. Shapiro*,
 [arXiv:1304.0457](https://arxiv.org/abs/1304.0457)).
 
-The standalone TwoPunctures code added some C++ functionality,
+The original standalone TwoPunctures code is written in C++,
 which limits the interoperability of the library with 
 legacy numerical relativity software.
-I've added a C-api in the Source files: `TwoPunctures_c_api.h` and `TwoPunctures_c_api.cc`.
+I've added a C-api in the Source files:
+`TwoPunctures_c_api.h` and `TwoPunctures_c_api.cc`.
 
 ## Physics
 
@@ -35,17 +36,11 @@ If you are using the `gh3d2m` code, I would recommend NOT compiling with OpenMP,
 as it allows you to call TwoPunctures on each CPU core when using MPI with
 that code.
  
-## TODO
-
-* Add features to compute modified gravity equations
-* Add time derivatives of lapse and shift as functions of generalized harmonic
-source terms. 
-
 ## License
 
 The original authors of the TwoPunctures are Marcus Ansorg, Erik Schnetter, Frank Löffler.
 Adaptions to make the standalone code were made by Federico Guercilena, Sven Köppel,
-and incorporated code written by 
+and incorporated an fast interpolation code written by 
 Vasileios Paschalidis, Zachariah B. Etienne, Roman Gold, and Stuart L. Shapiro.
 
 This code is licensed under the same LGPLv2.1 license as the original
