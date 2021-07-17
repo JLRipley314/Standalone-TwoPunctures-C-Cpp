@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <cassert>
 
 #include "TwoPunctures.h"
 #include "TwoPunctures_c_api.h"
@@ -73,10 +74,23 @@ EXTERNC TP_t twopunctures_init(
    typed_tp->par_S_minus[1] = par_S_minus_y;
    typed_tp->par_S_minus[2] = par_S_minus_z;
 
+   // number of collocation points
+   typed_tp->npoints_A   = npoints_A;
+   typed_tp->npoints_B   = npoints_B;
+   typed_tp->npoints_phi = npoints_phi; // must be a multiple of 4
+
+   assert(typed_tp->npoints_phi % 4 == 0);
+   // smoothen out the infinities at punctures
+   typed_tp->TP_epsilon = epsilon;
+
    printf("==================================================\n");
    printf("TwoPunctures C API called\n");
    printf("==================================================\n");
    printf("lapse kind = %s\n", typed_tp->initial_lapse.c_str());
+   printf("npoints_A = %d\n", typed_tp->npoints_A);
+   printf("npoints_B = %d\n", typed_tp->npoints_B);
+   printf("npoints_phi = %d\n", typed_tp->npoints_phi);
+   printf("epsilon = %d\n", typed_tp->TP_epsilon);
    printf("--------------------------------------------------\n");
    printf("target_M_plus = %f\n", typed_tp->target_M_plus);
    printf("P_plus_x = %f\n", typed_tp->par_P_plus[0]);
@@ -94,14 +108,6 @@ EXTERNC TP_t twopunctures_init(
    printf("S_minus_y = %f\n", typed_tp->par_S_minus[1]);
    printf("S_minus_z = %f\n", typed_tp->par_S_minus[2]);
    printf("==================================================\n");
-
-   // number of collocation points
-   typed_tp->npoints_A   = npoints_A;
-   typed_tp->npoints_B   = npoints_B;
-   typed_tp->npoints_phi = npoints_phi; // must be a multiple of 4
-
-   // smoothen out the infinities at punctures
-   typed_tp->TP_epsilon = epsilon;
 
    return tp;
 }
