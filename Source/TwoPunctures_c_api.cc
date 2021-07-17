@@ -90,7 +90,7 @@ EXTERNC TP_t twopunctures_init(
    printf("npoints_A = %d\n", typed_tp->npoints_A);
    printf("npoints_B = %d\n", typed_tp->npoints_B);
    printf("npoints_phi = %d\n", typed_tp->npoints_phi);
-   printf("epsilon = %d\n", typed_tp->TP_epsilon);
+   printf("epsilon = %f\n", typed_tp->TP_epsilon);
    printf("--------------------------------------------------\n");
    printf("target_M_plus = %f\n", typed_tp->target_M_plus);
    printf("P_plus_x = %f\n", typed_tp->par_P_plus[0]);
