@@ -1,4 +1,4 @@
-# The Standalone TwoPunctures code, with a C-api 
+# The Standalone TwoPunctures code, with a C api 
 
 ## Lineage 
 
