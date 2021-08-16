@@ -9,13 +9,16 @@ int main() {
 	
 	TP::TwoPunctures tp;
 
+	// par_b is the displacement of a single BH from the midpoint of the binary
+	// (note not CoM) along the x-axis (or z-axis if swap_xz is true) 
+	// i.e. it is half the separation between the BHs.
 	tp.par_b             =  6;
 
-	tp.target_M_plus     =  0.5;
-	tp.par_P_plus[0]     =  0.2;
+	tp.target_M_plus     =  0.5; // Target mass of `plus` black hole
+	tp.par_P_plus[0]     =  0.2; // x momentum component 
 	tp.par_P_plus[1]     =  0.0;
 	tp.par_P_plus[2]     =  0.0;
-	tp.par_S_plus[0]     =  0.0;
+	tp.par_S_plus[0]     =  0.0; // x spin component 
 	tp.par_S_plus[1]     =  0.0;
 	tp.par_S_plus[2]     =  0.0;
 
